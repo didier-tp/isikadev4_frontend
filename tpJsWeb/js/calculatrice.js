@@ -31,5 +31,11 @@ function calculerOperation(pOperation){
 		  //document.getElementById("spanRes").innerHTML = res;
           zoneRes.innerHTML = res;
 		 
-          		  
+		  var zoneUlHisto = document.getElementById("ulHistorique");
+          var noeudLi = document.createElement("li");
+		  zoneUlHisto.appendChild(noeudLi);
+		  var texteCalcul = "a="+a + " op=" + pOperation + " b=" + b + " res=" +res;
+		  //var noeudTexte=document.createTextNode(texteCalcul);
+		  //noeudLi.appendChild(noeudTexte);
+		  noeudLi.innerHTML = texteCalcul;
 		}

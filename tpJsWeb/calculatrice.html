@@ -3,7 +3,22 @@
     <title>calculatrice</title>
 	<script src="./js/calculatrice.js" ></script>
 </head>
-<body>
+<body id="main" >
+   <script>
+      function testDOM(){
+	     console.log("testDOM");
+		 // document.documentElement;  //premiere balise du fichier (ici HTML)
+		 var balise = document.getElementById('main');
+		 console.log(balise.nodeName);
+		 //var listeNoeudsFils = balise.childNodes; //liste de tous les sous noeuds
+		 var listeNoeudsFils = balise.getElementsByTagName("input");
+		 console.log("nb noeuds=" + listeNoeudsFils.length);
+		 for(i=0;i<listeNoeudsFils.length;i++){
+		    var noeudFils = listeNoeudsFils.item(i);
+			 console.log(noeudFils.nodeName);
+		 }
+	  }
+   </script>
    <h1>calculatrice</h1>
    
    a: <input id="a" type="text" /> <br/>
@@ -12,7 +27,15 @@
    <input type="button" onclick="calculerOperation('*')"  value="a*b"></input>
    <input type="button" onclick="calculerOperation('-')"  value="a-b"></input> 
    <input type="button" onclick="calculerOperation('/')"  value="a/b"></input><br/>
-   res = <span  id="spanRes"></span> 
+   <input type="button" onclick="testDOM()"  value="test_DOM"></input><br/>
+   res = <span  id="spanRes"></span> <br/>
+   <ul id="ulHistorique" >
+      <!-- <li>2*3=6</li> -->
+   </ul>
+   
+   
+   
+   
   <script>
       var v1="abc";
 	  console.log(typeof v1);

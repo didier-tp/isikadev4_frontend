@@ -20,7 +20,23 @@
    </table>
   
   <script>
-      
+      var tab1 = ["lundi" , "mardi" ]; //[];
+	  tab1.push("mercredi");
+	  console.log("tab1=" + tab1);
+	  
+	  //devise est un objet javascript ici exprimé en syntaxe littérale
+	  var devise1 = {
+	     code : 'EUR',
+		 nom : 'Euro',
+		 change : 1
+	  }
+	  console.log("devise1 au format JSON= " + JSON.stringify(devise1));
+	  
+	  var tabDevises = [];
+	  tabDevises.push(devise1);
+	  console.log("tabDevises=" + tabDevises);
+	  
+	  console.log("tabDevises au format JSON= " + JSON.stringify(tabDevises));
   </script>
 </body>
 </html>

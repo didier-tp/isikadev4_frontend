@@ -10,13 +10,18 @@
    code: <input id="code" type="text" /> <br/>
    nom: <input id="nom" type="text" /> <br/>
    change: <input id="change" type="text" /> <br/>
-   <input type="button"  value="Add"></input> 
+   <input type="button" onclick="ajoutDevise()" value="Add"></input> 
    <input type="button"  value="Update"></input>
    <input type="button"  value="Delete"></input> 
    
    <h3>liste des Devises<h3>
-   <table border="1">
+   <table border="1" id="tableDevises">
+     <thead>
       <tr><th>code</th><th>nom</th><th>change</th></tr>
+	 </thead>
+	 <tbody id="bodyTableau">
+	   <!-- <tr><td>USD</td><td>Dollar</td><td>1.1</td></tr> -->
+	 </tbody>
    </table>
   
   <script>

@@ -1,5 +1,6 @@
 
 var zoneRes;
+var cpt=0;
 
 function initZones(){
 	zoneRes=document.getElementById("spanRes");
@@ -33,8 +34,11 @@ function calculerOperation(pOperation){
 		 
 		  var zoneUlHisto = document.getElementById("ulHistorique");
           var noeudLi = document.createElement("li");
+		  cpt++;
+		  noeudLi.setAttribute("id","li"+cpt);
 		  zoneUlHisto.appendChild(noeudLi);
-		  var texteCalcul = "a="+a + " op=" + pOperation + " b=" + b + " res=" +res;
+		  var texteCalcul = "a="+a + " op=" + pOperation + 
+		     " b=" + b + " res=" +res;
 		  //var noeudTexte=document.createTextNode(texteCalcul);
 		  //noeudLi.appendChild(noeudTexte);
 		  noeudLi.innerHTML = texteCalcul;

@@ -1,7 +1,12 @@
 
+var zoneRes;
+
+function initZones(){
+	zoneRes=document.getElementById("spanRes");
+}
 
 function calculerOperation(pOperation){
-		  
+		  initZones();
 		  var a =  document.getElementById("a").value;
 		  console.log("a="+a);
 		  var b =   document.getElementById("b").value;
@@ -24,7 +29,7 @@ function calculerOperation(pOperation){
 		   }
 		  
 		  //document.getElementById("spanRes").innerHTML = res;
-          document.querySelector("#spanRes").innerHTML = res;
+          zoneRes.innerHTML = res;
 		 
           		  
 		}

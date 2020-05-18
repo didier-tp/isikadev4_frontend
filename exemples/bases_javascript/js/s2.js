@@ -14,7 +14,7 @@ function calculerMultiplication(){
 
 function calculerOperation(pOperation){
 		  
-		  var a =  document.querySelector("#a").value; //document.getElementById("a").value;
+		  var a =  (document.querySelector("#a")).value; //document.getElementById("a").value;
 		  console.log("a="+a);
 		  var b =   document.querySelector("#b").value;  //document.getElementById("b").value;
 		  console.log("b="+b);

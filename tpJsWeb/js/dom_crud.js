@@ -14,6 +14,7 @@ function initialiserPage(){
 	
 	tabDevises.push({code:'EUR' , nom : 'Euro' , change : 1})
 	tabDevises.push({code:'USD' , nom : 'Dollar' , change : 1.1})
+	
 	for(i=0;i<tabDevises.length;i++){
 		var noeudTr = document.createElement("tr");
 		zoneBodyTableau.appendChild(noeudTr);
@@ -27,6 +28,20 @@ function initialiserPage(){
 }
 
 function AjoutDevise(){
+	//récuperer le contenu des zones saisies (code , nom , change)
+	var valCode = ....;
+	var valNom = ...;
+	var valChange = ...;
+	
+	var nouvelleDevise = {
+	     code : valCode,
+		 nom : valNom,
+		 change : valChange
+	  } 
+	  
+	//ajout de nouvelleDevise dans le tableau javascript tabDevises
 	//...
+	
+	//ajout de nouvelleDevise dans le tableau HTML (partie zoneBodyTableau)
 }
 

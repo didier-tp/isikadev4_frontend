@@ -55,8 +55,8 @@ function ajoutDevise(){
 	
 	//ajout de nouvelleDevise dans le tableau HTML (partie zoneBodyTableau)
 	var newRow = zoneBodyTableau.insertRow(-1) ;//-1 pour ajout à la fin
-	var newCell1 = newRow.insertCell(0); newCell1.innerHTML = tabDevises[i].code;
-	newRow.insertCell(1).innerHTML = tabDevises[i].nom;
-	newRow.insertCell(2).innerHTML = tabDevises[i].change;
+	var newCell1 = newRow.insertCell(0); newCell1.innerHTML = nouvelleDevise.code;
+	newRow.insertCell(1).innerHTML = nouvelleDevise.nom;
+	newRow.insertCell(2).innerHTML = nouvelleDevise.change;
 }
 

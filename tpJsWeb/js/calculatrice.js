@@ -72,3 +72,10 @@ function calculerOperation(pOperation){
 		  //noeudLi.appendChild(noeudTexte);
 		  noeudLi.innerHTML = texteCalcul;
 		}
+//******* partie y=f(x)		
+function onCalculer(){
+	var x= Number(document.querySelector("#x").value);
+	var yEnFonctionDeX= document.querySelector("#y").value; //ex : "2*x"
+	var res = eval(yEnFonctionDeX);
+	document.querySelector("#spanResFx").innerHTML=res;
+}	

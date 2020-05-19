@@ -1,4 +1,17 @@
 
+window.onload = function () {
+	//code js décleché au chargement de la page
+	var zoneBtnAdd = document.getElementById("btnAdd");
+	
+	zoneBtnAdd.addEventListener("click", function (){
+		 calculerOperation('+');
+		 //....
+		 //....
+	});
+	
+}
+
+
 var zoneRes;
 var cpt=0;
 

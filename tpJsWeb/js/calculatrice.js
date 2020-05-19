@@ -2,7 +2,8 @@
 window.onload = function () {
 	//code js décleché au chargement de la page
 	
-	var zoneCbHisto = document.getElementById("cbHisto");
+	//var zoneCbHisto = document.getElementById("cbHisto");
+	var zoneCbHisto = document.querySelector("#cbHisto"); //comme .css et comme jQuery
 	
 	zoneCbHisto.addEventListener("click", function (){
 		//console.log("click sur cbHisto " + zoneCbHisto.checked );

@@ -135,6 +135,11 @@ function deleteDevise(){
 			//l'id est "tr_"+idSelected
 			//si cette ligne existe , la supprimer vis à vis de l'élément parent
 			//de l'arbre DOM ...parentNode , .removeChild(...)
+			var trASupprimer = document.getElementById("tr_"+idSelected);
+			if(trASupprimer){
+				var parentDeTrDansArbreDom = trASupprimer.parentNode;
+				parentDeTrDansArbreDom.removeChild(trASupprimer);
+			}
 			//************************
 			reInitEmptyDevise();
 		}
@@ -161,11 +166,13 @@ function mettreEnValeurLigneSelectionnee(selectedTr){
 			//********** A FAIRE EN TP:
 			//sur tr.querySelector("td") changer le style backgroundColor 
 			//à la valeur="lightblue";
+			tr.querySelector("td").style.backgroundColor="lightblue";
 			//****************************
 		}else{
 			//********** A FAIRE EN TP:
 			//sur tr.querySelector("td") changer le style backgroundColor 
 			//à la valeur="white";
+			tr.querySelector("td").style.backgroundColor="white";
 			//****************************
 		}
 	}
@@ -197,15 +204,17 @@ function addDeviseRow(devise){
 	var newRow = zoneBodyTableau.insertRow(-1) ;//-1 pour ajout à la fin
 	//************ A FAIRE EN TP:
 	//sur newRow fixer l'attribut "id" à la valeur "tr_"+devise.code
+	newRow.setAttribute("id","tr_"+devise.code);
 	//****************************
 	//pour acces rapide future suppression et autre
 	var newCell1 = newRow.insertCell(0);
 	//************ A FAIRE EN TP:
 	//enregistrer un déclenchement en différé des 2 lignes d'instructions
 	//suivante lors d'un futur événement "click" sur l'élément myCell1:
+	newCell1.addEventListener("click" , function () { 
 		selectionnerDevise(devise.code);
 		mettreEnValeurLigneSelectionnee(newRow);
-	//});	
+	});	
 	//*************************************
 	newCell1.innerHTML = devise.code;
 	newRow.insertCell(1).innerHTML = devise.nom;

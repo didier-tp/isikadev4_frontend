@@ -200,7 +200,6 @@ function addDeviseRow(devise){
 	//****************************
 	//pour acces rapide future suppression et autre
 	var newCell1 = newRow.insertCell(0);
-    newCell1.addEventListener("click",function(){
 	//************ A FAIRE EN TP:
 	//enregistrer un déclenchement en différé des 2 lignes d'instructions
 	//suivante lors d'un futur événement "click" sur l'élément myCell1:

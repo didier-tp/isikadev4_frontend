@@ -72,10 +72,14 @@ function calculerOperation(pOperation){
 		  //noeudLi.appendChild(noeudTexte);
 		  noeudLi.innerHTML = texteCalcul;
 		}
-//******* partie y=f(x)		
+//******* partie y=f(x)	
+
+var res; //variable de niveau global
+	
 function onCalculer(){
 	var x= Number(document.querySelector("#x").value);
 	var yEnFonctionDeX= document.querySelector("#y").value; //ex : "2*x"
-	var res = eval(yEnFonctionDeX);
+	res = eval(yEnFonctionDeX);
 	document.querySelector("#spanResFx").innerHTML=res;
+	window.setTimeout("alert(res)",2000); //traitement différé dans 2000 ms
 }	

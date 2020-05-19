@@ -11,6 +11,12 @@ window.onload = function () {
 		console.log("par rapport à divA, y="+(evt.pageY - zoneDivA.offsetTop));
 	});
 	
+	var zoneTxt1 = document.querySelector("#txt1");
+	zoneTxt1.addEventListener("keyup",function (evt){
+		console.log("evt.keycode="+evt.keyCode);
+		console.log("zoneTxt1.value="+zoneTxt1.value);
+		document.querySelector("#msg1").innerHTML= zoneTxt1.value;
+	});
 	
 	var zoneSelectCategorie = document.querySelector("#categorie");
 	

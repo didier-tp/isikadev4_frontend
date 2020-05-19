@@ -1,6 +1,21 @@
 
 window.onload = function () {
 	//code js décleché au chargement de la page
+	
+	var zoneCbHisto = document.getElementById("cbHisto");
+	
+	zoneCbHisto.addEventListener("click", function (){
+		//console.log("click sur cbHisto " + zoneCbHisto.checked );
+		var zoneUlHisto = document.getElementById("ulHistorique");
+		if(zoneCbHisto.checked){
+			  zoneUlHisto.style.display = "block";
+		}else{
+			zoneUlHisto.style.display = "none";
+		}
+	});
+	
+	
+	
 	var zoneBtnAdd = document.getElementById("btnAdd");
 	
 	zoneBtnAdd.addEventListener("click", function (){

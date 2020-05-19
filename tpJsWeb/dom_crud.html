@@ -25,6 +25,24 @@
    </table>
   
   <script>
+      //Fonction constructeur de Devise en javascript
+      function Devise(code,nom,change){
+		  this.code= code;
+		  this.nom=nom;
+		  this.change=change;
+		  this.display=function(){
+		      console.log("************ " + JSON.stringify(this));
+		  }
+	  }
+	  
+	  var devise2 = new Devise("USD","Dollar",1.1);
+	  var nomDevise2 = devise2.nom;
+	  var nomDevise2Bis = devise2["nom"];
+	  console.log("devise2 au format JSON= " + JSON.stringify(devise2));
+      console.log("nomDevise2="+nomDevise2);
+	  console.log("nomDevise2Bis="+nomDevise2Bis);
+	  devise2.display();
+  
       var tab1 = ["lundi" , "mardi" ]; //[];
 	  tab1.push("mercredi");
 	  console.log("tab1=" + tab1);

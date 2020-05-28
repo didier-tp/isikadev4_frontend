@@ -4,9 +4,11 @@ const apiRouter = express.Router();
 var allProduits = [];
 
 allProduits.push({ code : 1 , nom : 'classeur' , prix : 4.0 });
-allProduits.push({ code : 2 , nom : 'cahier' , change : 2.1 });
-allProduits.push({ code : 3 , nom : 'colle' , change : 2.4 });
-allProduits.push({ code : 4 , nom : 'stylo' , change : 1.9 }); 
+allProduits.push({ code : 2 , nom : 'cahier' , prix : 2.1 });
+allProduits.push({ code : 3 , nom : 'colle' , prix : 2.4 });
+allProduits.push({ code : 4 , nom : 'stylo' , prix : 1.9 });
+
+var codeMax=4; //pour simulation auto_incr 
 
 function findProduitInArrayByCode(produits,code){
 	var produit=null;
@@ -61,10 +63,15 @@ apiRouter.route('/produit-api/public/produit')
 });
 
 // http://localhost:8282/produit-api/private/role-admin/produit en mode post
-// avec { "code" : 1 , "nom" : "produitXy" , "prix" : 12.3 } dans req.body
+// avec { "code" : null , "nom" : "produitXy" , "prix" : 12.3 } 
+//ou bien {  "nom" : "produitXy" , "prix" : 12.3 }dans req.body
 apiRouter.route('/produit-api/private/role-admin/produit')
 .post( function(req , res  , next ) {
-	var nouvelleProduit = req.body;
+	var nouveauProduit = req.body;
+	//simulation auto_incr :
+	if(nouveauProduit.code == null){
+		codeMax++; nouveauProduit.code = codeMax;
+	}
 	console.log("POST,nouveauProduit="+JSON.stringify(nouveauProduit));
 	allProduits.push(nouveauProduit);
 	res.send(nouveauProduit);

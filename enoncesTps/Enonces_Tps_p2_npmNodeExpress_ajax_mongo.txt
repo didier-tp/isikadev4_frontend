@@ -1,0 +1,408 @@
+#2 -bases de "npm+nodeJs+express" + appels Ajax et accès asynchrone à MongoDB
+Objectifs:
+    • être capable de concevoir une petite Api REST .
+    • Savoir effectuer une communication via des appels Ajax coté client.
+    • utiliser une vraie base de données coté serveur (mongoDB)
+Contenu :
+- écosystème "node+npm" , fonctionnement asynchrone
+- package.json , npm install --save, ...
+- exemple HTTP/HTML basique
+- modules (export , require)
+- express (route , GET, POST, ...)
+- petite API rest au format JSON
+- accès à des bases de données depuis nodeJs (mongoDB, mysql , ...)
+- éventuels ORM (ex : Sequelize)
+- callbacks asynchrones
+- test avec Postman et/ou curl
+- appel ajax depuis coté html/navigateur (via XmlHttpRequest)
+- éventuelles autorisations CORS
+
+****************************************************************************
+***********  TP ************************************************************
+
+
+0. installation de nodeJs et npm (si nécessaire)
+si node -v et npm -v se sont pas des commandes reconnues (dans CMD)
+alors télécharger et installer nodeJs (pour windows 64 bits).
+relancer ensuite une nouvelle fenêtre CMD et npm -v .
+
+1. créer quelquepart (ex: c:\tp ou ...)
+   un nouveau répertoire "myNodeServer" qui deviendra un projet nodeJs.
+   Dans une fenetre CMD, se placer dans le répertoire vide myNodeServer
+   et lancer la commande interactive 
+   npm init
+   (appuyer tout le temps sur "enter" pour valider les valeurs par défaut)
+   --> visualiser le fichier créé package.json 
+   lancer la commande 
+   npm install --save express
+   --> visualiser le nouveau contenu du fichier package.json (effet de --save)
+   --> visualiser les éléments téléchargés dans node_modules
+   supprimer le sous répertoire node_modules (et tout son contenu)
+   lancer la commande 
+   npm install
+   --> visualiser les éléments re-téléchargés dans node_modules (en fonction des
+   dépendances exprimées dans le fichier package.json) .
+   
+2. Au sein du répertoire myNodeServer coder helloWorld.js 
+   qui affichera "Hello World" via console.log
+   depuis une invite de commande (CMD) lancer
+   node helloWorld.js
+   et visualiser le résultat attendu (pas très spectaculaire mais bon début).
+
+3. Au sein du répertoire myNodeServer coder basic_http_server.js  
+   en s'inspirant du paragraphe "Http sans express" du chapitre "Express" du support de cours  
+   depuis une invite de commande (CMD) lancer
+   node basic_http_server.js
+   et saisir l'url http://localhost:8282 dans un navigateur pour visualiser le résultat
+   Modifier un peu le texte affiché dans basic_http_server.js
+   Arrêter et relancer le server (Ctrl-C , node basic_http_server.js)
+   pour visualiser les changements.
+   lancer la commande 
+   npm install -g nodemon
+   de façon à installer (en mode global) l'extension nodemon.
+   Arrêter le server (Ctrl-C ) et relancer le via nodemon :
+   nodemon basic_http_server.js
+   Modifier un peu le texte affiché dans basic_http_server.js
+   ET VISUALISER DIRECTEMENT les changements dans le navigateur DES QUE LE
+   FICHIER EST SAUVEGARDé .  
+
+4a. Modules et export/require en mode commonjs .
+    coder un fichier calcul.js comportant les fonctions
+	   tva(ht,taux) et ttc(ht,taux)
+    faire en sorte que ttc() appelle tva() en interne
+    n'exporter que la fonction ttc et pas tva
+    Coder un fichier lancer_calcul.js
+    qui compotera un appel à la fonction ttc() du module calcul.js
+	(via une importation codée via require() )
+    Tester le tout. Vérifier également que tva() est inaccessible tant que pas
+	exportée .
+
+4b. Test unitaire simple avec mocha + chai .
+    En s'insipant du début de l'annexe "test (mocha + chai)" du support de cours
+	écrire et lancer un test unitaire calcul-spec.js (à placer dans un répertoire test)
+	NB: introduire puis enlever une erreur de code au sein de la fonction ttc()
+	pour vérifier le bon comportement du test unitaire (ko puis ok) .
+
+5. coder faculativement first_express_server.js selon 
+   l'exemple du support de cours (chapitre Express)
+   et visualiser le résultat .
+   On pourrait approfondir (en Tp) l'utilisation du framework express pour générer
+   directement des pages HTML (via un moteur de templates).
+   Ceci dit, il est aujourd'hui plus intéressant d'étudier comment utiliser express
+   pour coder une api REST retournant des données au format json.
+  
+6a. début d'api REST (en mode GET et sans base de données)  
+   ajouter un fichier server.js avec le code initial suivant:
+   ------------------------------------------------------------
+	var express = require('express');
+	var deviseApiRoutes = require('./devise-api-routes');
+	var app = express();
+
+	app.use(deviseApiRoutes.apiRouter); //delegate REST API routes to apiRouter(s)
+
+	app.listen(8282 , function () {
+		console.log("http://localhost:8282");
+	});
+	---------------------------------------------------------
+	
+	 ajouter un fichier devises-api-routes.js avec le code initial suivant:
+   ------------------------------------------------------------
+	var express = require('express');
+	const apiRouter = express.Router();
+
+	var allDevises = [];
+
+	allDevises.push({ code : 'EUR' , nom : 'Euro' , change : 1.0 });
+	allDevises.push({ code : 'USD' , nom : 'Dollar' , change : 1.1 });
+   
+   
+	//exemple URL: http://localhost:8282/devise-api/public/devise (returning all devises)
+	apiRouter.route('/devise-api/public/devise')
+	.get( function(req , res  , next ) {
+		res.send(allDevises);
+	});
+
+	exports.apiRouter = apiRouter;
+	------------------------------------------------------------
+	Lancer ensuite server.js avec node ou bien nodemon
+	et tester via l'url suivante: http://localhost:8282/devise-api/public/devise
+	
+6b. Coder une nouvelle route en mode GET permettant de récupérer
+    une seule devise en fonction de son code.
+    (exemple d'url : http://localhost:8282/devise-api/public/devise/EUR)
+	Fin de route de type '/devise-api/public/devise/:code' 
+	et récupération du code en fin d'url via req.params.code
+	
+6c. Ajout d'une page statique (memo URLs, petit menu)
+    Mettre en place (dans server.js) le code du paragraphe 
+	"Gestion par express d'une partie "statique""
+    du chapitre "Express" du support de cours	
+	dans le fichier html/index.html ajouter des liens hypertextes relatifs
+	(via <a href="../devise-api/...."> ... </a> )
+	de façon à déclencher les 2 appels précédents de WS REST en mode GET
+	(toutes devises et devise EUR) .
+	
+6d (facultatif). 
+    Améliorer le code de la route '/devise-api/public/devise'  (toutes devises)
+    en tenant compte d'un paramètre facultatif ?changeMini en fin d'URL
+	et avec la syntaxe req.query.changeMini pour récupérer la valeur
+	d'un paramètre http changeMini en fin d'URL (après ?)
+    (exemple d'url : http://localhost:8282/devise-api/public/devise?changeMini=1.05)
+	Tester via différentes fins d'URL.
+	
+7a. ajout en mode post (et test avec postman ou bien curl)
+	Ajouter 
+	   var bodyParser = require('body-parser');
+	et 
+	  var jsonParser = bodyParser.json() ;
+      app.use(jsonParser);
+	Dans le haut du fichier server.js de façon à ce que Express puisse convertir
+	de JSON en javascript les données envoyées en mode POST (req.body)
+	
+	Ajouter cette nouvelle route dans devise-api-routes.js :
+	
+	// http://localhost:8282/devise-api/private/role-admin/devise en mode post
+	// avec { "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 } dans req.body
+	apiRouter.route('/devise-api/private/role-admin/devise')
+	.post( function(req , res  , next ) {
+		var nouvelleDevise = req.body;
+		console.log("POST,nouvelleDevise="+JSON.stringify(nouvelleDevise));
+		allDevises.push(nouvelleDevise);
+		res.send(nouvelleDevise);
+	});
+	Redémarrer server.js si necessaire (selon utilisation de node ou nodemon)
+	Test avec postman:
+	Nouvel onglet (requete)  , mode POST , 
+	url=http://localhost:8282/devise-api/private/role-admin/devise
+	Dans sous onglet "Headers" Key=Content-Type et Value=application/json
+	Dans sous onglet "Body" , cliquer sur "raw" et placer
+	{ "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 }
+	Cliquer ensuite sur "Send" . On devrait normalement voir les mêmes données
+	en retour .
+	Re-déclencher l'url http://localhost:8282/devise-api/public/devise 
+	dans un navigateur pour bien vérifier l'ajout .
+	
+7b. Coder (dans devise-api-routes.js )une nouvelle route en mode DELETE
+    Exemple URL= http://localhost:8282/devise-api/private/role-admin/devise/EUR
+	Et effectuer un test avec POSTMAN (ou bien curl) et reafficher_all.
+	Suggestions:
+	   tableauQuiVabien.splice(i,1); pour supprimer l'élément en position i
+	   Retourner une réponse de type { deleted-devise-code : "EUR" }
+	   
+7c. Coder (dans devise-api-routes.js )une nouvelle route en mode PUT
+    Exemple de code:
+	------
+	apiRouter.route('/devise-api/private/role-admin/devise')
+    .put( function(req , res  , next ) {
+	var newValueOfDeviseToUpdate = req.body;
+	console.log("PUT,newValueOfDeviseToUpdate="+JSON.stringify(newValueOfDeviseToUpdate));
+	var deviseToUpdate = findDeviseInArrayByCode(allDevises,newValueOfDeviseToUpdate.code);
+	if(deviseToUpdate!=null){
+		deviseToUpdate.nom = newValueOfDeviseToUpdate.nom;
+		deviseToUpdate.change = newValueOfDeviseToUpdate.change;
+		res.send(deviseToUpdate);
+	 }else{
+		res.status(404).json({ error : "no devise to update with code=" + newValueOfDeviseToUpdate.code });
+	 }
+    });
+	-----
+	Et effectuer un test avec POSTMAN (ou bien curl) et reafficher_all.
+
+	
+8. Appels Ajax. 
+   Recopier dans le sous répertoire html (à coté de index.html) 
+   le contenu de https://github.com/didier-mycontrib/web-js/tree/master/pour_debut_tp/pour_tp_ajax
+   (référentiel git https://github.com/didier-mycontrib/web-js , partie pour_debut_tp/pour_tp_ajax )
+   Ajouter dans index.html un lien hypertexte pour naviguer vers le 
+   nouveau fichier dom_crud_devise_ajax.html.
+   Compléter les parties encadrées par //********** A FAIRE EN TP ***********
+                                       //*************************************
+   dans les fichiers js/my-ajax-util.js
+                   et js/dom_crud_devise_ajax.js
+				   
+   Redémarrer server.js si necessaire (selon utilisation de node ou nodemon)
+   Tester avec un navigateur web ( http://localhost:8282)
+   
+9. Tests avec autorisations CORS
+   Via un COPIER/COLLER (mais pas de couper/coller !!!) ,
+   effectuer une copie de dom_crud_devise_ajax.html
+   et des fichiers annexes (du sous répertoire js) 
+   dans un répertoire en dehors du projet myNodeServer (ex: c:\temp ou autre)
+   
+   Au sein de la copie extérieur 
+   c:\temp\dom_crud_devise_ajax.html
+   c:\temp\js\dom_crud_devise_ajax.js
+   MODIFIER LES URLS pour quelles soient exprimées de façon ABSOLUES/COMPLETES
+   
+   ex:                    "../devise-api/public/devise" à transformer en 
+       "http://localhost:8282/devise-api/public/devise" 
+   
+   Ouvrir ensuite directement le fichier dom_crud_devise_ajax.html externe au projet
+   avec un navigateur (ex: file:///c:/temp/dom_crud_devise_ajax.html)
+   Et visualiser les MESSAGES d'erreur dans la console web du navigateur
+   (exemple avec firefox : Blocage d’une requête multiorigines (Cross-Origin Request) :
+   la politique « Same Origin » ne permet pas de consulter la ressource distante 
+   située sur http://localhost:8282/devise-api/public/devise. 
+   Raison : l’en-tête CORS « Access-Control-Allow-Origin » est manquant. )
+   
+   Ajouter dans le haut de server.js des autorisations CORS en s'inspirant
+   du paragraphe "Autorisations "CORS"" 
+   du chapitre "Web services REST avec Express" du support de cours.
+   
+   Redémarrer server.js si necessaire (selon utilisation de node ou nodemon)
+   Ré-essayer un chargement de la page externe
+    file:///c:/temp/dom_crud_devise_ajax.html
+   qui devrait normalement bien fonctionner maintenant .
+   
+	
+10a. Préparation d'une base de données mongoDB	
+     installer (si nécessaire) sur l'ordinateur local la dernière version
+	 de MongoDB (Community-edition ) (par exemple pour windows 64 bits)
+	 - choisir mode "complete" avec options par défaut 
+	 - pas besoin de compass 
+	 (exemple de répertoire d'installation:  C:\Program Files\MongoDB\Server\4.2).
+	 A la fin de l'installation, le serveur mongoDB est normalement configuré 
+	 comme une tâche de fond (service windows)
+	 
+	 Récupérer (via git clone au autre) une copie du répertoire
+	 configMongoDB_test_devises
+	 du référentiel https://github.com/didier-mycontrib/config_mongodb
+	 Au sein du répertoire configMongoDB_test_devises,
+	  - visualiser et adpater si nécessaire le contenu des scripts (.bat)
+	  - lancer d'abord import_devises_dataset_in_test_db.bat
+	  - lancer ensuite mongo_shell.bat
+	           saisir la commande db.devises.find();
+			   pour vérifier puis quitter (via exit ou autre)
+
+
+10b. Accès à la base de données mongoDB depuis NodeJs
+
+     npm install --save mongodb
+	 
+	 effectuer une copie de devise-api-routes.js
+	 que l'on peut appeler devise-api-routes_v1_sans_mongo.js par exemple.
+	 
+	 Récupérer une copie du fichier suivant
+	 https://github.com/didier-mycontrib/tp_node_js/blob/master/util/d2f-contrib-mongo-util/my_generic_mongo_client.js
+	 (référentiel git https://github.com/didier-mycontrib/tp_node_js, 
+	  partie util/d2f-contrib-mongo-util/my_generic_mongo_client.js)
+	 
+	 Dans le haut du fichier devise-api-routes.js
+	 ajouter 
+	 var myGenericMongoClient = require('./my_generic_mongo_client');
+	 
+	 Dans le fichier devise-api-routes.js supprimer 
+	    var allDevises = [];
+	 et d'éventuelles fonctions utilitaires qui tournent autour.
+	 Conserver essentiellement le code des routes (get,post,delete,put).
+	 
+	 Exemple de code possible (améliorable en cas d'erreur):
+	 -------------------------------------------------------
+	 var express = require('express');
+const apiRouter = express.Router();
+
+var myGenericMongoClient = require('./my_generic_mongo_client');
+
+function replace_mongoId_byCode(devise){
+	devise.code = devise._id;
+	delete devise._id; 
+	return devise;
+}
+
+function replace_mongoId_byCode_inArray(deviseArray){
+	for(i in deviseArray){
+		replace_mongoId_byCode(deviseArray[i]);
+	}
+	return deviseArray;
+}
+
+function findDevisesWithChangeMini(devises,changeMini){
+	var selDevises=[];
+	for(i in devises){
+		if(devises[i].change >= changeMini){
+			  selDevises.push(devises[i]);
+		}
+	}
+	return selDevises;
+}
+
+
+//exemple URL: http://localhost:8282/devise-api/public/devise/EUR
+apiRouter.route('/devise-api/public/devise/:code')
+.get( function(req , res  , next ) {
+	var codeDevise = req.params.code;
+	myGenericMongoClient.genericFindOne('devises',
+										{ '_id' : codeDevise },
+									    function(err,devise){
+										   res.send(replace_mongoId_byCode(devise));
+									   });
+	
+});
+
+//exemple URL: http://localhost:8282/devise-api/public/devise (returning all devises)
+//             http://localhost:8282/devise-api/public/devise?changeMini=1.05
+apiRouter.route('/devise-api/public/devise')
+.get( function(req , res  , next ) {
+	var changeMini = req.query.changeMini;
+	myGenericMongoClient.genericFindList('devises',{},function(err,allDevises){
+		if(changeMini){
+			res.send(replace_mongoId_byCode_inArray(findDevisesWithChangeMini(allDevises,changeMini)));
+		}else{
+		   res.send(replace_mongoId_byCode_inArray(allDevises));
+		}
+	});//end of genericFindList()
+});
+
+// http://localhost:8282/devise-api/private/role-admin/devise en mode post
+// avec { "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 } dans req.body
+apiRouter.route('/devise-api/private/role-admin/devise')
+.post( function(req , res  , next ) {
+	var nouvelleDevise = req.body;
+	console.log("POST,nouvelleDevise="+JSON.stringify(nouvelleDevise));
+	nouvelleDevise._id=nouvelleDevise.code;
+	myGenericMongoClient.genericInsertOne('devises',
+										nouvelleDevise,
+									     function(err,devise){
+										     res.send(nouvelleDevise);
+									    });
+});
+
+// http://localhost:8282/devise-api/private/role-admin/devise en mode PUT
+// avec { "code" : "USD" , "name" : "Dollar" , "change" : 1.123 } dans req.body
+apiRouter.route('/devise-api/private/role-admin/devise')
+.put( function(req , res  , next ) {
+	var newValueOfDeviseToUpdate = req.body;
+	console.log("PUT,newValueOfDeviseToUpdate="+JSON.stringify(newValueOfDeviseToUpdate));
+	myGenericMongoClient.genericUpdateOne('devises',
+	newValueOfDeviseToUpdate.code ,
+	{ nom : newValueOfDeviseToUpdate.nom , 
+	  change : newValueOfDeviseToUpdate.change} ,
+	function(err,devise){
+			if(err){
+				res.status(404).json({ error : "no devise to update with code=" + newValueOfDeviseToUpdate.code });
+			}else{
+					res.send(newValueOfDeviseToUpdate);
+			 }
+	});	//end of genericUpdateOne()
+});
+
+// http://localhost:8282/devise-api/private/role-admin/devise/EUR en mode DELETE
+apiRouter.route('/devise-api/private/role-admin/devise/:code')
+.delete( function(req , res  , next ) {
+	var codeDevise = req.params.code;
+	console.log("DELETE,codeDevise="+codeDevise);
+	myGenericMongoClient.genericRemove('devises',{ _id : codeDevise },
+									     function(err,devise){
+										     res.send({ deletedDeviseCode : codeDevise } );
+									    });
+});
+
+exports.apiRouter = apiRouter;
+-----------------------------------
+NB: ce code sera amélioré (mieux structuré) au sein d'une future formation
+    où l'on étudiera les nouveautés de es2015 , es2017 , ...
+	 
+
+
+	
+    	

@@ -1,0 +1,124 @@
+#1 - bases de javascript, css et Api DOM , premiers tests unitaires
+Objectif :
+    • être capable de concevoir une page "CRUD" avec un jeu de données en mémoire
+Contenu :
+- bases du langage javascript : (typeof , === , eval , ...) , tableau, objets.
+- bases de css : (sélecteurs , principaux styles , ...) et lien avec page HTML
+- javascript dans page HTML (<script> , onclick=".." , ...)
+- api DOM (getElementById , innerHTML, event listener , addElement, ...) 
+- petit aperçu sur syntaxe compacte de jquery (présentation, démos /exemples)
+- bases élémentaires de "nodeJs/npm" et premiers tests unitaires (mocha, …)
+
+****************************************************************************
+***********  TP ************************************************************
+
+1. "hello world" en javascript dans page HTML
+   (pour respecter la tradition)
+   helloWorld.html
+   
+   variantes à tester:
+   ------------------
+   - sans et avec fichier ".js" annexe
+   - affichage via console.log() 
+       ET document.write() 
+	      ou bien
+	   alert() 
+	      ou bien
+      var zRes = document.getElementById("spanRes");
+	 zRes.innerHTML = "hello world";
+
+2. coder calculatrice.html (et js/calculatrice.js)
+   permettant de :
+   - saisir deux valeurs numériques (a et b) via <input type="text" name="aOub">
+   - déclencher des additions ou multiplications
+     ( <input type="button" value="..." onclick="calculerOperation('+')" />
+	   <input type="button" value="..." onclick="calculerOperation('*')" /> )
+   - afficher le résultat (dans <span ou <div avec id="..." )
+   
+3. tests élémentaires en javascript 
+   dans la partie body de calculatrice.html , 
+   ajouter dans un bloc de <script>...</script> et via des affichages de type console.log(...)
+   des tests élémentaires sur le langage javascript :
+      * var v1 ="abc"; console.log (typeof v1); 
+	  * === vs == pour comparer va="25" et vb=25 
+	  * ...
+   Visualiser les résultats dans la console du navigateur
+   
+4. Historique des calculs dans calculatrice.html (DOM simple)
+   Reprendre calculatrice.html (et .js).
+   Dans calculatrice.html , ajouter 
+   <ul id="ulHistorique" >
+      <!-- <li>2*3=6</li> -->
+   </ul>
+   Dans calculatrice.js , ajouter du code pour que chaque calcul déclenché
+   (addition ou multiplication) soit affiché en tant que nouvelle puce dans la
+   liste des calculs effectués
+   
+5. Ajouter dans calculatrice.html    
+   <input type="checkbox" id="cbHisto" checked /> voir l'historique <br/>
+   juste au dessus de <ul id="ulHistorique" > .
+   Via addEventListener à utiliser dans calculatrice.js , faire en sorte que
+   la liste soit montrée ou cachée selon que la case à cocher sera cochée ou pas.
+   ( ....style.display = "none" ou "block" ) .
+   
+6. Relooker librement calculatrice.html en ajoutant quelques styles css
+   dans un fichier annexe css/styles.css 
+   
+7. Dans un nouveau fichier testEvents.html ,
+   ajouter une liste déroulante pour choisir une catégorie de produit.
+   Dans la fonction window.onload = function () { } du
+   fichier js/testEvents.js , utiliser addEventListener de façon 
+   à gérer l'évélement change sur la liste déroulante.
+   On affichera la categorie choisie dans une zone <span ou <div de la page .
+   Autres tests d'événements libres ...
+   
+8. Objects élémentaires en javascript .
+   Dans la partie body d'un nouveau fichier testObjects.html , 
+   ajouter dans un bloc de <script>...</script> et via des affichages de type console.log(...)
+   des tests élémentaires sur des objets javascript :
+      * tableau des jours de la semaine 
+	   ("lundi" et "mardi"  , puis .push() de "mercredi")
+	   affichage via boucle for et via JSON.stringify()
+	  * constructeur de Devise(code,nom,change) et test via new et divers affichages ...
+	  * objet litteral javascript (sans new) , var devise1 = {
+	     code : 'EUR',
+		 nom : 'euro',
+		 change : 1
+	  } et affichages, manipulations
+	  * var tabDevises1 = [];
+	    et ajout , affichage , éventuelles suppressions, ...
+		
+   Visualiser les résultats dans la console du navigateur
+   
+9. Exercice (à trou, à compléter) .
+   récupérer (par copier coller les fichiers dom_crud_devise.html et .js)
+   depuis l'url suivante : https://github.com/didier-mycontrib/web-js
+    (partie pour_debut_tp/pour_tp_crud )
+   Analyser (en diagonale le code de dom_crud_devise.js)
+   compléter ensuite les différentes parties encadrées par 
+   //********** A FAIRE EN TP:
+   et //****************************
+   Visualiser le résultat (comportement CRUD attendu) 
+   
+10. Pleins d'exemples à étudier (comprendre, décortiquer, ....) :
+
+   https://github.com/didier-mycontrib/web-js
+   
+   parties à étudier :
+   
+   * basic_html_js_test_jasmine (test unitaire avec jasmine)
+   * basic_html_js_test_mocha_chai (test unitaire avec mocha + chai)
+   * base_js/html_with_dyn_css.html
+   * ...
+
+
+   
+
+   
+   
+	  
+   
+
+   
+   
+								  

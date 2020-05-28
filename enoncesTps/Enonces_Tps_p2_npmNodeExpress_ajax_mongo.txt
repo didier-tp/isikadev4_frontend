@@ -162,7 +162,7 @@ relancer ensuite une nouvelle fenêtre CMD et npm -v .
 	Ajouter cette nouvelle route dans devise-api-routes.js :
 	
 	// http://localhost:8282/devise-api/private/role-admin/devise en mode post
-	// avec { "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 } dans req.body
+	// avec { "code" : "mxy" , "nom" : "monnaieXy" , "change" : 123 } dans req.body
 	apiRouter.route('/devise-api/private/role-admin/devise')
 	.post( function(req , res  , next ) {
 		var nouvelleDevise = req.body;
@@ -176,7 +176,7 @@ relancer ensuite une nouvelle fenêtre CMD et npm -v .
 	url=http://localhost:8282/devise-api/private/role-admin/devise
 	Dans sous onglet "Headers" Key=Content-Type et Value=application/json
 	Dans sous onglet "Body" , cliquer sur "raw" et placer
-	{ "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 }
+	{ "code" : "mxy" , "nom" : "monnaieXy" , "change" : 123 }
 	Cliquer ensuite sur "Send" . On devrait normalement voir les mêmes données
 	en retour .
 	Re-déclencher l'url http://localhost:8282/devise-api/public/devise 
@@ -187,7 +187,7 @@ relancer ensuite une nouvelle fenêtre CMD et npm -v .
 	Et effectuer un test avec POSTMAN (ou bien curl) et reafficher_all.
 	Suggestions:
 	   tableauQuiVabien.splice(i,1); pour supprimer l'élément en position i
-	   Retourner une réponse de type { deleted-devise-code : "EUR" }
+	   Retourner une réponse de type { deletedDeviseCode : "EUR" }
 	   
 7c. Coder (dans devise-api-routes.js )une nouvelle route en mode PUT
     Exemple de code:

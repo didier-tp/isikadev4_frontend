@@ -34,8 +34,9 @@ apiRouter.route('/devise-api/public/devise/:code')
 //             http://localhost:8282/devise-api/public/devise?changeMini=1.05
 apiRouter.route('/devise-api/public/devise')
 .get( function(req , res  , next ) {
-	var changeMini = req.query.changeMini;
+	var changeMini = Number(req.query.changeMini);
 	var mongoQuery = changeMini ? { change: { $gte: changeMini }  } : { } ;
+	//console.log("mongoQuery=" + JSON.stringify(mongoQuery));
 	myGenericMongoClient.genericFindList('devises',mongoQuery,function(err,devises){
 		   res.send(replace_mongoId_byCode_inArray(devises));
 	});//end of genericFindList()

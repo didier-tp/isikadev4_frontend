@@ -61,7 +61,7 @@ apiRouter.route('/devise-api/public/devise')
 });
 
 // http://localhost:8282/devise-api/private/role-admin/devise en mode post
-// avec { "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 } dans req.body
+// avec { "code" : "mxy" , "nom" : "monnaieXy" , "change" : 123 } dans req.body
 apiRouter.route('/devise-api/private/role-admin/devise')
 .post( function(req , res  , next ) {
 	var nouvelleDevise = req.body;
@@ -71,7 +71,7 @@ apiRouter.route('/devise-api/private/role-admin/devise')
 });
 
 // http://localhost:8282/devise-api/private/role-admin/devise en mode PUT
-// avec { "code" : "USD" , "name" : "Dollar" , "change" : 1.123 } dans req.body
+// avec { "code" : "USD" , "nom" : "Dollar" , "change" : 1.123 } dans req.body
 apiRouter.route('/devise-api/private/role-admin/devise')
 .put( function(req , res  , next ) {
 	var newValueOfDeviseToUpdate = req.body;

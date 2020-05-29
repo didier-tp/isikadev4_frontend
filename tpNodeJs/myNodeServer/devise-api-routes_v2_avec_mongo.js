@@ -16,15 +16,6 @@ function replace_mongoId_byCode_inArray(deviseArray){
 	return deviseArray;
 }
 
-function findDevisesWithChangeMini(devises,changeMini){
-	var selDevises=[];
-	for(i in devises){
-		if(devises[i].change >= changeMini){
-			  selDevises.push(devises[i]);
-		}
-	}
-	return selDevises;
-}
 
 
 //exemple URL: http://localhost:8282/devise-api/public/devise/EUR
@@ -44,17 +35,14 @@ apiRouter.route('/devise-api/public/devise/:code')
 apiRouter.route('/devise-api/public/devise')
 .get( function(req , res  , next ) {
 	var changeMini = req.query.changeMini;
-	myGenericMongoClient.genericFindList('devises',{},function(err,allDevises){
-		if(changeMini){
-			res.send(replace_mongoId_byCode_inArray(findDevisesWithChangeMini(allDevises,changeMini)));
-		}else{
-		   res.send(replace_mongoId_byCode_inArray(allDevises));
-		}
+	var mongoQuery = changeMini ? { change: { $gte: changeMini }  } : { } ;
+	myGenericMongoClient.genericFindList('devises',mongoQuery,function(err,devises){
+		   res.send(replace_mongoId_byCode_inArray(devises));
 	});//end of genericFindList()
 });
 
 // http://localhost:8282/devise-api/private/role-admin/devise en mode post
-// avec { "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 } dans req.body
+// avec { "code" : "mxy" , "nom" : "monnaieXy" , "change" : 123 } dans req.body
 apiRouter.route('/devise-api/private/role-admin/devise')
 .post( function(req , res  , next ) {
 	var nouvelleDevise = req.body;
@@ -68,7 +56,7 @@ apiRouter.route('/devise-api/private/role-admin/devise')
 });
 
 // http://localhost:8282/devise-api/private/role-admin/devise en mode PUT
-// avec { "code" : "USD" , "name" : "Dollar" , "change" : 1.123 } dans req.body
+// avec { "code" : "USD" , "nom" : "Dollar" , "change" : 1.123 } dans req.body
 apiRouter.route('/devise-api/private/role-admin/devise')
 .put( function(req , res  , next ) {
 	var newValueOfDeviseToUpdate = req.body;

@@ -77,13 +77,13 @@ relancer ensuite une nouvelle fenêtre CMD et npm -v .
     Tester le tout. Vérifier également que tva() est inaccessible tant que pas
 	exportée .
 
-4b. Test unitaire simple avec mocha + chai .
+4b(facultatif). Test unitaire simple avec mocha + chai .
     En s'insipant du début de l'annexe "test (mocha + chai)" du support de cours
 	écrire et lancer un test unitaire calcul-spec.js (à placer dans un répertoire test)
 	NB: introduire puis enlever une erreur de code au sein de la fonction ttc()
 	pour vérifier le bon comportement du test unitaire (ko puis ok) .
 
-5. coder faculativement first_express_server.js selon 
+5(facultatif). coder faculativement first_express_server.js selon 
    l'exemple du support de cours (chapitre Express)
    et visualiser le résultat .
    On pourrait approfondir (en Tp) l'utilisation du framework express pour générer
@@ -316,15 +316,6 @@ function replace_mongoId_byCode_inArray(deviseArray){
 	return deviseArray;
 }
 
-function findDevisesWithChangeMini(devises,changeMini){
-	var selDevises=[];
-	for(i in devises){
-		if(devises[i].change >= changeMini){
-			  selDevises.push(devises[i]);
-		}
-	}
-	return selDevises;
-}
 
 
 //exemple URL: http://localhost:8282/devise-api/public/devise/EUR
@@ -343,18 +334,16 @@ apiRouter.route('/devise-api/public/devise/:code')
 //             http://localhost:8282/devise-api/public/devise?changeMini=1.05
 apiRouter.route('/devise-api/public/devise')
 .get( function(req , res  , next ) {
-	var changeMini = req.query.changeMini;
-	myGenericMongoClient.genericFindList('devises',{},function(err,allDevises){
-		if(changeMini){
-			res.send(replace_mongoId_byCode_inArray(findDevisesWithChangeMini(allDevises,changeMini)));
-		}else{
-		   res.send(replace_mongoId_byCode_inArray(allDevises));
-		}
+	var changeMini = Number(req.query.changeMini);
+	var mongoQuery = changeMini ? { change: { $gte: changeMini }  } : { } ;
+	//console.log("mongoQuery="+JSON.stringify(mongoQuery));
+	myGenericMongoClient.genericFindList('devises',mongoQuery,function(err,devises){
+		   res.send(replace_mongoId_byCode_inArray(devises));
 	});//end of genericFindList()
 });
 
 // http://localhost:8282/devise-api/private/role-admin/devise en mode post
-// avec { "code" : "mxy" , "name" : "monnaieXy" , "change" : 123 } dans req.body
+// avec { "code" : "mxy" , "nom" : "monnaieXy" , "change" : 123 } dans req.body
 apiRouter.route('/devise-api/private/role-admin/devise')
 .post( function(req , res  , next ) {
 	var nouvelleDevise = req.body;
@@ -368,7 +357,7 @@ apiRouter.route('/devise-api/private/role-admin/devise')
 });
 
 // http://localhost:8282/devise-api/private/role-admin/devise en mode PUT
-// avec { "code" : "USD" , "name" : "Dollar" , "change" : 1.123 } dans req.body
+// avec { "code" : "USD" , "nom" : "Dollar" , "change" : 1.123 } dans req.body
 apiRouter.route('/devise-api/private/role-admin/devise')
 .put( function(req , res  , next ) {
 	var newValueOfDeviseToUpdate = req.body;

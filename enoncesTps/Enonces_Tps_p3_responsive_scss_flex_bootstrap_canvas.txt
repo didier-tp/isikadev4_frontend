@@ -1,0 +1,88 @@
+#3 - "responsive design" avec scss, flex, bootstrap-css
+Objectif :
+    • bien relooker l'ihm web , la rendre "responsive" et y intégrer quelques diagrammes
+Contenu :
+- approfondissements css (transparence , animations, ...)
+- media-query et flex-box (css3)
+- scss (avec variables , préprocesseurs , ...)
+- bootstrap-css 4 (grille, carrousel, cards, popups, onglets,...)
+- api "canvas" pour dessiner en HTML5/js
+- chartJs (api javascript pour générer des diagrammes)
+
+
+****************************************************************************
+***********  TP ************************************************************
+
+1. Comprendre la structure du point de départ du Tp "tpJsWebResponsiveSpa"
+   - Récupérer (via git) , le début du code du projet "tpJsWebResponsiveSpa"
+   dans le répertoire pour_debut_tp\pour_tp_responsive_spa
+   du référentiel https://github.com/didier-mycontrib/web-js (ou autre).
+   - Effectuer une copie complète de "tpJsWebResponsiveSpa" dans c:/tp ou ailleurs
+   - Lire le contenu de run_lite_server.bat et effectuer des installations si nécessaire
+   - Faire fonctionner le site html/js via run_lite_server.bat
+   - Etudier le code de js/my_spa_util.js et de index.html
+     pour comprendre le comportement "SPA : Single Page Application"
+
+2. En s'inspirant de tests-html5/essai_layout_semantique.html
+                     et de tests-html5/layout.css
+   du référentiel https://github.com/didier-mycontrib/web-html5-css3 ;
+   mais en étant libre de tout restructurer / relooker , 
+   Améliorer le fichier tpJsWebResponsiveSpa/index.html
+   en structurant bien cette page:
+     - zones "header" , "footer" , "section mainContent" , ...
+     - css/layout.css (avec différentes couleurs de fond).
+
+3. Améliorer le fichier sp_dom_crud_devise.html
+   via des ajouts de styles css
+   Objectifs:
+   - Zone de saisies bien alignées dans le formulaire (devise courante)
+   via un style css proche de label { width:8em; display: inline-block; }
+   - Tableau relooké avec ligne d'entête mise en évidence
+   et une ligne sur 2 avec un style css différent 
+   (ex: texte noir sur fond blanc ou texte blanc sur fond noir)
+
+4. Media query et premier aspect responsive sur toutes les pages.
+   Dans un fichier styles.css attaché à index.html
+   Faire en sorte que pour les balises h1,h3,p,.. 
+   la taille de la police de caractère soit différente selon 
+   la taille de la fenêtre du navigateur .
+   On pourra par exemple partiellement s'inspirer de media_css3_responsive/responsive-page.html
+   du référentiel https://github.com/didier-mycontrib/web-html5-css3
+   Et on pourra par exemple choisir 36em , 46em et 64em comme effet de seuil (sur min-width)
+
+5. Améliorer encore sp_dom_crud_devise.html (suite du Tp3)
+   en utilisant bootstrap_css (grille , form_horizontal , form_group , ...).
+   On pourra par exemple s'inspirer le la partie bs4/form-layout.html 
+   du référentiel git "https://github.com/didier-mycontrib/test_bootstrap".
+
+6. Via l'api javascript canvas de HTML5, compléter le code de js/dessin.js
+   de façon à ce l'on puisse dessiner et effacer un dessin dans sp_dessin.html .
+
+7. Compléter la partie "news" (sp_news.html , js/news.js) en ajoutant :
+   - des appels ajax (en mode GET) pour récupérer le contenu de data/news.json
+   - des beaux affichages de chacune des news sous forme de "card boostrap4"
+     NB: on affichera 2 news (dans 2 cards) par ligne
+         (avec un layout contrôlé au choix par flexBox ou via grille bootstrap)
+         et on controlera la taille des images internes
+         via une classe de style de ce genre:
+         img.maxOverviewSized {
+	      max-height : 250px;
+	     /*width : 100%;*/
+	     max-width : 100%;
+	    height: auto;
+	   width : auto;
+         }
+
+8. Améliorer index.html sur les aspects suivants:
+    - sticky_header (et éventuellement sticky_footer) 
+      (source d'inspiration:  tests-html5/with_sticky_header.html
+                      ou bien tests-html5/with_flex_sticky_header.html
+       du référentiel git https://github.com/didier-mycontrib/web-html5-css3)
+    - éventuel menu déroulant (navbar de bootstrap 4)
+    - ...
+
+9. Améliorer styles.css en partant de styles.scss et en utilisant quelques variables
+   	 
+   
+
+   

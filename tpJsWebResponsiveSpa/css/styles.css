@@ -8,4 +8,5 @@ label { width:8em; display: inline-block; }
 /* depuis css3 , pseudo styles :nth-child */
 tbody tr:nth-child(2n) { color : green; }
 tbody tr:nth-child(2n+1) { color : blue; }
+
 thead th { background-color : yellow }

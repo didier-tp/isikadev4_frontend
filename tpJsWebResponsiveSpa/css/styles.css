@@ -1,7 +1,13 @@
 /*d'abord les règles pour tous médias et tailles */
 
 p { font-size: 1.2em ; }
-label { width:8em; display: inline-block; }
+
+/* sans bootstrap-css : label { width:8em; display: inline-block; } */
+div.form-group label.col-sm-4{
+    text-align : right;
+}
+
+
 /* avec <tr class="pair ou impair" > ... */
 /*
 .pair {  color : red; }

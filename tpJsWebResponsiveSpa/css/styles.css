@@ -1,5 +1,11 @@
 p { font-size: 1.6em ; }
 label { width:8em; display: inline-block; }
-.pair {  color : red }
+/* avec <tr class="pair ou impair" > ... */
+/*
+.pair {  color : red; }
 .impair { color : blue;}
+*/
+/* depuis css3 , pseudo styles :nth-child */
+tbody tr:nth-child(2n) { color : green; }
+tbody tr:nth-child(2n+1) { color : blue; }
 thead th { background-color : yellow }

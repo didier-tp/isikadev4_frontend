@@ -1,0 +1,5 @@
+header { background-color: yellow ; }
+footer { background-color: black ; color : white }
+section#mainContent {
+	 border-color: red ; border-width : 2px; border-style: solid;
+}

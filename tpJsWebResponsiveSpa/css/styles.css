@@ -1,1 +1,5 @@
 p { font-size: 1.6em ; }
+label { width:8em; display: inline-block; }
+.pair {  color : red }
+.impair { color : blue;}
+thead th { background-color : yellow }

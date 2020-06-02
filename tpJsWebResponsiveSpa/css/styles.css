@@ -1,4 +1,6 @@
-p { font-size: 1.6em ; }
+/*d'abord les règles pour tous médias et tailles */
+
+p { font-size: 1.2em ; }
 label { width:8em; display: inline-block; }
 /* avec <tr class="pair ou impair" > ... */
 /*
@@ -10,3 +12,34 @@ tbody tr:nth-child(2n) { color : green; }
 tbody tr:nth-child(2n+1) { color : blue; }
 
 thead th { background-color : yellow }
+
+/* ensuite nouvelles regles pour taille < 36em de large) */
+@media screen and (max-width : 36em){
+	h1,h2,h3,h4, p { color : green; }
+	h1 { font-size: 2.4em ;}
+	h2 { font-size: 2.2em ;}
+	h3 { font-size: 1.8em ;}
+	h4 { font-size: 1.2em ;}
+	p { font-size: 1em ;}
+}
+
+/* ensuite nouvelles regles pour taille > 36em de large) */
+@media screen and (min-width : 36em){
+	h1,h2,h3,h4, p { color : red; }
+	h1 { font-size: 2.8em ;}
+	h2 { font-size: 2.4em ;}
+	h3 { font-size: 2em ;}
+	h4 { font-size: 1.6em ;}
+	p { font-size: 1.2em ;}
+}
+
+/* ensuite nouvelles regles pour taille > 48em de large) */
+@media screen and (min-width : 48em){
+	h1,h2,h3,h4, p { color : blue; }
+	h1 { font-size: 3.3em ;}
+	h2 { font-size: 2.8em ;}
+	h3 { font-size: 2.4em ;}
+	h4 { font-size: 1.8em ;}
+	p { font-size: 1.4em ;}
+}
+

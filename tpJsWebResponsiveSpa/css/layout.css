@@ -1,5 +1,7 @@
 header { background-color: yellow ; }
+nav { text-align: left }
 footer { background-color: black ; color : white }
 section#mainContent {
-	 border-color: red ; border-width : 2px; border-style: solid;
+	 background-color: lightblue;
+	 border-color: blue ; border-width : 2px; border-style: solid;
 }

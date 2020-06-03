@@ -2,10 +2,10 @@
 function creerEtAttacherCard(news,parentInDom){
 	//<div class="card"
 	var noeudCard = document.createElement("div");
-	noeudCard.setAttribute("class" , "card");
+	noeudCard.setAttribute("class" , "card with-margin-bottom");
 	parentInDom.appendChild(noeudCard);
 	
-	//<div class="card-header bg-primary text-white">
+	//<div class="card-header bg-primary text-white">titre1</div>
 	var noeudCardHeader = document.createElement("div");
 	noeudCardHeader.setAttribute("class" , "card-header bg-primary text-white");
 	noeudCardHeader.innerHTML = news.title;
@@ -26,7 +26,7 @@ function creerEtAttacherCard(news,parentInDom){
 }
 
 function afficherNews(tabNews){
-	zoneNews=document.getElementById("zoneNews");
+	var zoneNews=document.getElementById("zoneNews");
 	var nbNews = tabNews.length;
 	var nbRows = nbNews/2; //si 2 colonnes par ligne
 	console.log("nbNews="+ nbNews + " nbRows=" + nbRows);

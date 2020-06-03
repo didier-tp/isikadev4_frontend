@@ -7,6 +7,10 @@ div.form-group label.col-sm-4{
     text-align : right;
 }
 
+.with-margin-bottom{
+	margin-bottom : 2em;
+}
+
 
 /* avec <tr class="pair ou impair" > ... */
 /*

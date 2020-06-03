@@ -1,55 +1,113 @@
+@charset "UTF-8";
 /*d'abord les règles pour tous médias et tailles */
-
-p { font-size: 1.2em ; }
+p {
+  font-size: 1.2em;
+}
 
 /* sans bootstrap-css : label { width:8em; display: inline-block; } */
-div.form-group label.col-sm-4{
-    text-align : right;
+div.form-group label.col-sm-4 {
+  text-align: right;
 }
 
-.with-margin-bottom{
-	margin-bottom : 2em;
+.with-margin-bottom {
+  margin-bottom: 2em;
 }
-
 
 /* avec <tr class="pair ou impair" > ... */
 /*
-.pair {  color : red; }
-.impair { color : blue;}
+.pair {  color : $my_red; }
+.impair { color : $my_blue;}
 */
 /* depuis css3 , pseudo styles :nth-child */
-tbody tr:nth-child(2n) { color : green; }
-tbody tr:nth-child(2n+1) { color : blue; }
+tbody tr:nth-child(2n) {
+  color: #1ccf1c;
+}
 
-thead th { background-color : yellow }
+tbody tr:nth-child(2n+1) {
+  color: #4a3ef7;
+}
+
+thead th {
+  background-color: yellow;
+}
 
 /* ensuite nouvelles regles pour taille < 36em de large) */
-@media screen and (max-width : 36em){
-	h1,h2,h3,h4, p { color : green; }
-	h1 { font-size: 2.4em ;}
-	h2 { font-size: 2.2em ;}
-	h3 { font-size: 1.8em ;}
-	h4 { font-size: 1.2em ;}
-	p { font-size: 1em ;}
-}
+@media screen and (max-width: 36em) {
+  h1, h2, h3, h4, p {
+    color: #1ccf1c;
+  }
 
+  h1 {
+    font-size: 2.4em;
+  }
+
+  h2 {
+    font-size: 2.2em;
+  }
+
+  h3 {
+    font-size: 1.8em;
+  }
+
+  h4 {
+    font-size: 1.2em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+}
 /* ensuite nouvelles regles pour taille > 36em de large) */
-@media screen and (min-width : 36em){
-	h1,h2,h3,h4, p { color : red; }
-	h1 { font-size: 2.8em ;}
-	h2 { font-size: 2.4em ;}
-	h3 { font-size: 2em ;}
-	h4 { font-size: 1.6em ;}
-	p { font-size: 1.2em ;}
-}
+@media screen and (min-width: 36em) {
+  h1, h2, h3, h4, p {
+    color: red;
+  }
 
+  h1 {
+    font-size: 2.8em;
+  }
+
+  h2 {
+    font-size: 2.4em;
+  }
+
+  h3 {
+    font-size: 2em;
+  }
+
+  h4 {
+    font-size: 1.6em;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+}
 /* ensuite nouvelles regles pour taille > 48em de large) */
-@media screen and (min-width : 48em){
-	h1,h2,h3,h4, p { color : blue; }
-	h1 { font-size: 3.3em ;}
-	h2 { font-size: 2.8em ;}
-	h3 { font-size: 2.4em ;}
-	h4 { font-size: 1.8em ;}
-	p { font-size: 1.4em ;}
+@media screen and (min-width: 48em) {
+  h1, h2, h3, h4, p {
+    color: #4a3ef7;
+  }
+
+  h1 {
+    font-size: 3.3em;
+  }
+
+  h2 {
+    font-size: 2.8em;
+  }
+
+  h3 {
+    font-size: 2.4em;
+  }
+
+  h4 {
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1.4em;
+  }
 }
 
+/*# sourceMappingURL=styles.css.map */

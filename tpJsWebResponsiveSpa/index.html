@@ -54,22 +54,21 @@ window.addEventListener('load', initMainPageAfterLoad);
 </head>
 <body>
 <div class="container">
-<header id="mainHeader" role="banner">
+<header id="mainHeader" role="banner" class="stickyHeader">
  <h1>entete de page (logo, ...)</h1>
-</header>
-<nav id="mainNav">
+ <nav id="mainNav">
   <input type="button" value="euroToFranc" id="idP1" /> -
   <input type="button" value="graphique" id="idP2" /> - 
   <input type="button" value="calculatrice" id="idP3" /> - 
   <input type="button" value="domCrudDevises" id="idP4" /> - 
   <input type="button" value="dessin" id="idP5" /> - 
   <input type="button" value="news" id="idP6" /> -  
-</nav>   
- 
-<section id="mainContent">
+ </nav>   
+</header>
+<section id="mainContent" class="mainContentUnderStickyHeader mainContentAboveStickyFooter">
    <div id="idAlternativeSubPart">...</div>
 </section>
-<footer id="mainFooter" >
+<footer id="mainFooter" class="stickyFooter" >
  <h4>pied de page (liens, mentions légales)</h4>
 </footer>
 </div>

@@ -5,3 +5,26 @@ section#mainContent {
 	 background-color: lightblue;
 	 border-color: blue ; border-width : 2px; border-style: solid;
 }
+
+.stickyHeader {
+  position: fixed; /* Set to fixed position */
+  top: 0; /* Position at the top of the page */
+  width: 100%; /* Full width */
+  height : 7rem; /* small necessary height for header content */
+  z-index: 200;
+}
+
+.stickyFooter {
+  position: fixed; /* Set to fixed position */
+  bottom: 0; /* Position at the bottom of the page */
+  width: 100%; /* Full width */
+  height : 2.5rem; /* small necessary height for footer content */
+}
+
+.mainContentUnderStickyHeader{
+	margin-top: 7rem; /* Add a top margin to avoid content overlay */
+}
+
+.mainContentAboveStickyFooter{
+	margin-bottom: 2.5rem; /* Add a bottom margin to avoid content overlay */
+}

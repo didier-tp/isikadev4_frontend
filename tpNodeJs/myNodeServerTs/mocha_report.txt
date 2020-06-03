@@ -1,0 +1,4 @@
+
+> mynodeserver@1.0.0 test D:\tp\local-git-didier-tp-repositories\isikadev4_frontend\tpNodeJs\myNodeServerTs
+> mocha --reporter spec
+

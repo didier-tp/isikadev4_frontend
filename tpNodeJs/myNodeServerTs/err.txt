@@ -1,0 +1,2 @@
+[31mError: No test files found: "test"[39m
+npm ERR! Test failed.  See above for more details.

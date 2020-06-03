@@ -1,0 +1,145 @@
+#4 - Programmation modulaire et objet avec es6 et typescript 
+Objectif :
+    • mieux structurer un code existant, le rendre plus "orienté objet" et avoir de bonnes bases pour aborder ultérieurement certains frameworks évolués tels que "angular" .
+Contenu :
+- langage typescript (tsc , tsconfig.json, types , ...)
+- autres apports de es2015/typescript (lambda=arrow function, map, template-string, generics, ...)
+- typescript orienté objet (class, extends, interface, constructor, abstract, ...)
+- modules es2015/typescript (avec application coté client et coté serveur)
+- notion de "bundle" et présentation de webpack (démos ou …)
+- javascript asynchrones (Promise es2015 , async/await es2017)
+- tests unitaires (mocha, ...) avec Promise et/ou async/await
+- code nodeJs bien structuré avec "data-service" (dao asynchrones) , errorHandler , ...
+- librairie de définitions (avec types précis) pour aider à obtenir une bonne auto-complétion.
+
+****************************************************************************
+***********  TP ************************************************************
+
+
+0a. installation de nodeJs et npm (si nécessaire)
+si node -v et npm -v se sont pas des commandes reconnues (dans CMD)
+alors télécharger et installer nodeJs (pour windows 64 bits).
+relancer ensuite une nouvelle fenêtre CMD et npm -v .
+
+0b. installation de typescript (si nécessaire)
+si tsc -v est une commande inconnue (dans CMD),
+alors lancer 
+npm install -g typescript
+
+
+2a. premiers pas avec typescript
+dans c:\temp (ou ailleurs) créer un nouveau répertoire "tp-ts"
+via nodepad++ ou bien visual-studio-code écrire un petit fichier f1.ts
+en y déclarant une variable x de type :number , affectant 18 à x 
+et affichant x via console.log() .
+compiler/transipler f1.ts en f1.js via tsc
+exécuter node f1.js
+
+2b. typescript en mode "projet":
+créer ensuite les sous répertoires "tp-ts/src" et "tp-ts/dist"
+déplacer f1.ts dans "tp-ts/scr" et supprimer f1.js
+dans un terminal "CMD" , se placer dans c:\temp\tp-ts et lancer la commande
+tsc --init
+modifier ensuite le fichier tsconfig.json en 
+décommentant "outDir" : et modifiant la valeur: "outDir": "dist" .
+sauvegarder ensuite le fichier tsconfig
+Ouvrir ensuite l'ensemble du "folder" tp-ts via l'éditeur "visual-studio-code"
+dans tp-ts/src , créer un nouveau fichier f2.ts
+y déclarer un tableau de string (avec quelques valeurs)
+via for(...of...) boucler sur les valeurs du tableau de façon à 
+appliquer .toUppercase() et effectuer un affichage via console.log()
+Ouvrir un nouveau terminal (dans visual-studio-code) et y lancer la commande
+"tsc" ou bien "tsc -w" .
+Les 2 fichiers f1.js et f2.js doivent normalement être générés dans tp-ts/dist.
+Dans encore un autre nouveau terminal, lancer node dist/f2.js
+pour exécuter le code
+
+2c. typescript en mode "orienté objet"
+dans tp-ts/src (à coté de f1.ts et f2.ts) créer un nouveau fichier personne.ts
+comportant une classe Personne ayant les attributs nom , prenom et age .
+coder et tester plein de versions successives (sans puis avec constructeur, ...)
+
+2d. tester héritage typescript via classe "Empoye" (dans personne.ts)
+héritant de "Personne" avec un numero et un salaire en plus.
+
+2e. ajouter les nouveaux fichiers test_pers_emp.ts et employe.ts
+puis réorganiser le code via des import/export et des couper/coller.
+tester l'exécution via node dist/test_pers_emp.js
+
+2f. analyser certains exemples (dont basic_es2015.js) du répertoire server-back-end
+    du référentiel git https://github.com/didier-mycontrib/tp_es2015_es2017
+    et effectuer divers petits exercices d'entrainement syntaxique
+	sur les "arrow functions/lambda" , "template-string" , "destructuring" ,
+	"generics" , ...
+	
+3a. programmer (en environnement nodejs asynchrone) 
+    et en version "callback hell", un petit programme 
+	async_stdin.js en mode texte
+    permettant de :
+      - saisir la valeur de a (ex: 5)
+	  - saisir la valeur de x (ex: 6)
+	  - saisir la valeur de b (ex: 4)
+      - calculer et afficher res=a*x+b (ex: 34)	  
+	NB: on s'appuira sur la fonction utilitaire suivante:
+	var stdin = process.stdin;
+    var stdout = process.stdout;
+	function ask(question, callback) {
+		stdin.resume();
+		stdout.write(question + ": ");
+		stdin.once('data', function(data) {
+			data = data.toString().trim();
+			callback(data);
+		});
+	}	
+	ask("nom", function(nomSaisi){ console.log("nomSaisi="+nomSaisi); });
+	
+3b. programmer et tester une version améliorée async_stdin_promiseEs2015.js	
+    basée sur l'utlisation de "Promise" (.then().then().catch())
+	
+4a. Récupérer via git clone , une copie du référentiel 
+    "https://github.com/didier-mycontrib/tp_node_js" .
+    Effectuer ensuite une copie (sur c:/tp ou ailleurs) de la 
+    partie "pour_debut_tp/pour_tp_node_ts/myNodeServerTs" 
+    Au sein du répertoire myNodeServerTs , lancer la commande
+    npm install pour reconstituer le répertoire "node_modules"
+    Lancer ensuite le script lancer_nodeJs_noDB.bat
+    Tester le bon fonctionnement dans un navigateur web 
+    (http://localhost:8282).
+    Etudier la structure globale du code (en diagonale):
+    front-end, src , dist , tsconfig.json , package.json
+    src/server.ts src/api src/...
+
+4b. Renommer src/api/deviseApiRoutes.ts en src/api/deviseApiRoutes_solution.ts.txt
+    Renommer deviseApiRoutes_promise.ts.txt en src/api/deviseApiRoutes.ts
+    Coder toutes fonctions de src/api/deviseApiRoutes.ts
+    en utilisant l'api "Promise" .then() selon les commentaires
+    lancer tsc pour transpiler les .ts de src en .js dans dist
+    corriger les éventuelles erreurs
+    Lancer ensuite le script lancer_nodeJs_noDB.bat
+    Tester le bon fonctionnement dans un navigateur web 
+    (http://localhost:8282).
+
+5a. programmer et tester une version améliorée async_stdin_asyncAwaitEs2017.js
+    (basée sur une copie de async_stdin_promiseEs2015.js)	
+    et basée sur l'utilisation de async/await.
+    Attention plus de .cath() mais try{ } catch { }
+
+5b. Au sein du projet "myNodeServerTs" ,
+    Renommer src/api/deviseApiRoutes.ts en src/api/deviseApiRoutes_promise.ts.txt
+    Renommer deviseApiRoutes_asyncAwait.ts.txt en src/api/deviseApiRoutes.ts
+    Coder la partie /**** A FAIRE EN TP ****/ de src/api/deviseApiRoutes.ts
+    en utilisant l'api async/await selon les commentaires et en s'inpirant
+    des autres exemples du même fichier.
+    lancer tsc pour transpiler les .ts de src en .js dans dist
+    corriger les éventuelles erreurs
+    Lancer ensuite le script lancer_nodeJs_noDB.bat
+    Tester le bon fonctionnement dans un navigateur web 
+    (http://localhost:8282).
+
+6. Tests unitaires via "mocha + chai" .
+
+7...
+    
+    
+
+	

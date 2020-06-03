@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>tpJsWebResponsiveSpa</title>
+<link rel="stylesheet" href="./css/bootstrap.min.css"> 
+<!-- https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css
+-->
+ <link rel="stylesheet" type="text/css" href="css/layout.css" />
+ <link rel="stylesheet" type="text/css" href="css/styles.css" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- for responsive bootstrap on mobile device -->
+ <script src="js/my_ajax_util.js"></script>
+ <script src="js/my_spa_util.js"></script>
+<script>
+
+function initMainPageAfterLoad(){
+	var btnP1 = document.getElementById("idP1");
+	btnP1.addEventListener('click', function(event) {
+	    loadJsScript("js/euroToFranc.js");
+		loadSubPart("idAlternativeSubPart","sp_euroToFranc.html","startEuroToFranc()")
+	});
+	var btnP2 = document.getElementById("idP2");
+	btnP2.addEventListener('click', function(event) {
+	    loadJsScript("lib/chart.2.7.3.min.js");
+		loadJsScript("js/graph.js");
+		loadSubPart("idAlternativeSubPart","sp_graph.html","startGraph()")
+	});
+	
+	var btnP3 = document.getElementById("idP3");
+	btnP3.addEventListener('click', function(event) {
+		loadJsScript("js/calculatrice.js");
+		loadSubPart("idAlternativeSubPart","sp_calculatrice.html","startCalculatrice()")
+	});
+	
+	var btnP4 = document.getElementById("idP4");
+	btnP4.addEventListener('click', function(event) {
+		loadJsScript("js/dom_crud_devise.js");
+		loadSubPart("idAlternativeSubPart","sp_dom_crud_devise.html","startDomCrudDevise()")
+	});
+	
+	var btnP5 = document.getElementById("idP5");
+	btnP5.addEventListener('click', function(event) {
+		loadJsScript("js/dessin.js");
+		loadSubPart("idAlternativeSubPart","sp_dessin.html","startDessin()")
+	});
+	
+	var btnP6 = document.getElementById("idP6");
+	btnP6.addEventListener('click', function(event) {
+		loadJsScript("js/news.js");
+		loadSubPart("idAlternativeSubPart","sp_news.html","startNews()")
+	});
+}
+window.addEventListener('load', initMainPageAfterLoad);
+
+</script>
+</head>
+<body>
+<div class="container">
+<header id="mainHeader" role="banner" class="stickyHeader">
+ <h1>entete de page (logo, ...)</h1>
+ <nav id="mainNav">
+  <input type="button" value="euroToFranc" id="idP1" /> -
+  <input type="button" value="graphique" id="idP2" /> - 
+  <input type="button" value="calculatrice" id="idP3" /> - 
+  <input type="button" value="domCrudDevises" id="idP4" /> - 
+  <input type="button" value="dessin" id="idP5" /> - 
+  <input type="button" value="news" id="idP6" /> -  
+ </nav>   
+</header>
+<section id="mainContent" class="mainContentUnderStickyHeader mainContentAboveStickyFooter">
+   <div id="idAlternativeSubPart">...</div>
+</section>
+<footer id="mainFooter" class="stickyFooter" >
+ <h4>pied de page (liens, mentions légales)</h4>
+</footer>
+</div>
+</body>
+</html>

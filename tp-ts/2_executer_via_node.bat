@@ -1,0 +1,3 @@
+REM sans tsconfig.json , ni src / dist , ...
+node f1.js
+pause

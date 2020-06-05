@@ -1,22 +1,22 @@
 [
 {
 "_id" : "USD",
-"nom" : "dollar",
+"nom" : "Dollar",
 "change" : 1.11
 },
 {
 "_id" : "EUR",
-"nom" : "euro",
+"nom" : "Euro",
 "change" : 1
 },
 {
 "_id" : "GBP",
-"nom" : "livre",
+"nom" : "Livre",
 "change" :0.9961
 },
 {
 "_id" : "JPY",
-"nom" : "yen",
+"nom" : "Yen",
 "change" : 112.203
 }
 ]

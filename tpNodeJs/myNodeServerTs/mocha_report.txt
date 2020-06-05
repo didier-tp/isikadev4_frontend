@@ -9,51 +9,18 @@ rest express node server listening at 8282
   devise api
     getDeviseByCode
 MyMongoConnection, trying openConnection with dbUrl=mongodb://localhost:27017/test
-      1) returns status 200 and a devise object with good name
+      √ returns status 200 and a devise object with good name (233ms)
 
   internal deviseService
     getAllDevises
       √ returning at least 4 devises
     getDeviseByCode
-deviseEur:{"nom":"euro","change":1,"code":"EUR"}
-      2) euro for code EUR
+deviseEur:{"nom":"Euro","change":1,"code":"EUR"}
+      √ euro for code EUR
 deviseRelue (after saveOrUpdate):{"nom":"devise a1","change":123,"code":"Da1"}
       √ saveOrUpdate_et_getByIdEnchaine
 
 
-  2 passing (169ms)
-  2 failing
-
-  1) devise api
-       getDeviseByCode
-         returns status 200 and a devise object with good name:
-
-      Uncaught AssertionError: expected 'euro' to equal 'Euro'
-      + expected - actual
-
-      -euro
-      +Euro
-      
-      at chai_1.default.request.get.end (dist\test\devise-api.spec.js:33:51)
-      at Test.Request.callback (node_modules\superagent\lib\node\index.js:716:12)
-      at parser (node_modules\superagent\lib\node\index.js:916:18)
-      at IncomingMessage.res.on (node_modules\superagent\lib\node\parsers\json.js:19:7)
-      at endReadableNT (_stream_readable.js:1125:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
-
-  2) internal deviseService
-       getDeviseByCode
-         euro for code EUR:
-
-      AssertionError: expected 'euro' to equal 'Euro'
-      + expected - actual
-
-      -euro
-      +Euro
-      
-      at Context.<anonymous> (dist\test\devise-core.spec.js:23:35)
-      at process._tickCallback (internal/process/next_tick.js:68:7)
-
-
+  4 passing (294ms)
 
 Terminer le programme de commandes (O/N)�? Terminer le programme de commandes (O/N)�? 

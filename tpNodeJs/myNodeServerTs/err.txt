@@ -1,2 +1,2 @@
-[31mError: No test files found: "test"[39m
-npm ERR! Test failed.  See above for more details.
+(node:15740) DeprecationWarning: Configuration via mocha.opts is DEPRECATED and will be removed from a future version of Mocha. Use RC files or package.json instead.
+^C

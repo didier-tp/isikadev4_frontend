@@ -19,73 +19,65 @@ function initDeviseService() : DeviseDataService {
 
 // .../devise-api/public/devise/EUR ou ...
 deviseApiRouter.route('/devise-api/public/devise/:code')
-.get(function(req :Request, res :Response , next: NextFunction){
+.get(asyncToResp(async function(req :Request, res :Response , next: NextFunction){
     let codeDevise = req.params.code;
-    deviseService.findById(codeDevise)
-    .then((devise)=>{ res.send(devise);} )
-    .catch((err)=>{ res.status(404).send(err);})
-   
-});
+    let devise = await deviseService.findById(codeDevise)
+    return devise;
+}));
 
 // http://localhost:8282/devise-api/public/devise renvoyant tout [ {} , {}]
 // http://localhost:8282/devise-api/public/devise?changeMini=1.1 renvoyant [{}] selon critere
 deviseApiRouter.route('/devise-api/public/devise')
-.get(function(req :Request, res :Response , next: NextFunction ) {
+.get(asyncToResp(async function(req :Request, res :Response , next: NextFunction ) {
     let  changeMini :number = Number(req.query.changeMini);
-    deviseService.findAll()
-    .then((deviseArray)=>{ res.send(deviseArray);} )
-    .catch((err)=>{ res.status(404).send( err );})
-});
+    let deviseArray = await deviseService.findAll();
+    if(changeMini){
+            //filtrage selon critère changeMini:
+            deviseArray = deviseArray.filter((dev)=>dev.change >= changeMini);
+        }
+    return deviseArray;
+}));
 
 // .../devise-api/public/convert?source=EUR&target=USD&amount=100 renvoyant { ... } 
 deviseApiRouter.route('/devise-api/public/convert')
-.get(async function(req :Request, res :Response , next: NextFunction){
+.get(asyncToResp(async function(req :Request, res :Response , next: NextFunction){
     const  codeSrc :string = <any> req.query.source;
     const  codeTarget:string = <any> req.query.target;
     const  amount = Number(req.query.amount);
-    let deviseSrc : Devise=null;
-    deviseService.findById(codeSrc)
-    .then( (deviseSource)=>{ deviseSrc = deviseSource;
-                             return deviseService.findById(codeTarget);} )
-    .then((deviseTarget) => { res.send(
-                                        { source : codeSrc,
-                                          target : codeTarget,
-                                          amount : amount,
-                                        result : amount * deviseTarget.change / deviseSrc.change
-                                        });
-     })
-     .catch((err)=>{ res.status(500).send(err );})
-});
+    const deviseSrc = await deviseService.findById(codeSrc);
+    const deviseTarget = await deviseService.findById(codeTarget)
+    return { source : codeSrc,
+             target : codeTarget,
+             amount : amount,
+             result : amount * deviseTarget.change / deviseSrc.change
+    };
+}));
 
 
 //POST ... with body { "code": "M1" , "nom" : "monnaie1" , "change" : 1.123 }
 deviseApiRouter.route('/devise-api/private/role-admin/devise')
-.post(function(req :Request, res :Response , next: NextFunction ) {
+.post(asyncToResp(async function(req :Request, res :Response , next: NextFunction ) {
     let  devise :Devise =  req.body ; //as javascript object via jsonParser
-    deviseService.insert(devise)
-    .then((savedDevise)=>{ res.send(savedDevise);} )
-    .catch((err)=>{ res.status(500).send(  err );})
-});
+    let savedDevise = await deviseService.insert(devise);
+                      // await deviseService.saveOrUpdate(devise);
+    return savedDevise;
+}));
 
 //PUT ... with body { "code": "USD" , "nom" : "dollar" , "change" : 1.1 }
 deviseApiRouter.route('/devise-api/private/role-admin/devise')
-.put(function(req :Request, res :Response , next: NextFunction ) {
+.put(asyncToResp(async  function(req :Request, res :Response , next: NextFunction ) {
     let  devise :Devise =  req.body ; //as javascript object
-    deviseService.update(devise)
-    .then((updatedDevise)=>{ res.send(updatedDevise);} )
-    .catch((err)=>{ res.status(500).send( err );})
-});
+    let updatedDevise = await deviseService.update(devise);
+    return updatedDevise;
+}));
 
 // DELETE http://localhost:8282/devise-api/private/role_admin/devise/EUR
 deviseApiRouter.route('/devise-api/private/role-admin/devise/:code')
-.delete(function(req :Request, res :Response , next: NextFunction ) {
+.delete(asyncToResp(async  function(req :Request, res :Response , next: NextFunction ) {
     let codeDevise = req.params.code;
-    deviseService.deleteById(codeDevise)
-	.then ( () => {
-                  res.send({ "action" : "devise with code="+codeDevise + " was deleted"});
-                 })
-    .catch((err)=>{ res.status(500).send(err);})
-});
+    await deviseService.deleteById(codeDevise)
+    return{ "action" : "devise with code="+codeDevise + " was deleted"};
+}));
 
 
 

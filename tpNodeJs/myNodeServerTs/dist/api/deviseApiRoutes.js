@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-//import { ErrorWithStatus , NotFoundError, ConflictError } from '../error/errorWithStatus';
-const apiHandler_1 = require("./apiHandler");
 const MemDeviseDataService_1 = require("../core/mem/MemDeviseDataService");
 const MongoDeviseDataService_1 = require("../core/mongo/MongoDeviseDataService");
 const MyAppConfig_1 = require("../config/MyAppConfig");
@@ -16,56 +14,65 @@ function initDeviseService() {
 }
 // .../devise-api/public/devise/EUR ou ...
 exports.deviseApiRouter.route('/devise-api/public/devise/:code')
-    .get(apiHandler_1.asyncToResp(async function (req, res, next) {
+    .get(function (req, res, next) {
     let codeDevise = req.params.code;
-    let devise = await deviseService.findById(codeDevise);
-    return devise;
-}));
+    deviseService.findById(codeDevise)
+        .then((devise) => { res.send(devise); })
+        .catch((err) => { res.status(404).send({ err: err }); });
+});
 // http://localhost:8282/devise-api/public/devise renvoyant tout [ {} , {}]
 // http://localhost:8282/devise-api/public/devise?changeMini=1.1 renvoyant [{}] selon critere
 exports.deviseApiRouter.route('/devise-api/public/devise')
-    .get(apiHandler_1.asyncToResp(async function (req, res, next) {
+    .get(function (req, res, next) {
     let changeMini = Number(req.query.changeMini);
-    let deviseArray = await deviseService.findAll();
-    if (changeMini) {
-        //filtrage selon critère changeMini:
-        deviseArray = deviseArray.filter((dev) => dev.change >= changeMini);
-    }
-    return deviseArray;
-}));
+    deviseService.findAll()
+        .then((deviseArray) => { res.send(deviseArray); })
+        .catch((err) => { res.status(404).send({ err: err }); });
+});
 // .../devise-api/public/convert?source=EUR&target=USD&amount=100 renvoyant { ... } 
 exports.deviseApiRouter.route('/devise-api/public/convert')
-    .get(apiHandler_1.asyncToResp(async function (req, res, next) {
+    .get(async function (req, res, next) {
     const codeSrc = req.query.source;
     const codeTarget = req.query.target;
     const amount = Number(req.query.amount);
-    const deviseSrc = await deviseService.findById(codeSrc);
-    const deviseTarget = await deviseService.findById(codeTarget);
-    return { source: codeSrc,
-        target: codeTarget,
-        amount: amount,
-        result: amount * deviseTarget.change / deviseSrc.change
-    };
-}));
+    let deviseSrc = null;
+    deviseService.findById(codeSrc)
+        .then((deviseSource) => {
+        deviseSrc = deviseSource;
+        return deviseService.findById(codeTarget);
+    })
+        .then((deviseTarget) => {
+        res.send({ source: codeSrc,
+            target: codeTarget,
+            amount: amount,
+            result: amount * deviseTarget.change / deviseSrc.change
+        });
+    })
+        .catch((err) => { res.status(500).send({ err: err }); });
+});
 //POST ... with body { "code": "M1" , "nom" : "monnaie1" , "change" : 1.123 }
 exports.deviseApiRouter.route('/devise-api/private/role-admin/devise')
-    .post(apiHandler_1.asyncToResp(async function (req, res, next) {
+    .post(function (req, res, next) {
     let devise = req.body; //as javascript object via jsonParser
-    let savedDevise = await deviseService.insert(devise);
-    // await deviseService.saveOrUpdate(devise);
-    return savedDevise;
-}));
+    deviseService.insert(devise)
+        .then((savedDevise) => { res.send(savedDevise); })
+        .catch((err) => { res.status(500).send({ err: err }); });
+});
 //PUT ... with body { "code": "USD" , "nom" : "dollar" , "change" : 1.1 }
 exports.deviseApiRouter.route('/devise-api/private/role-admin/devise')
-    .put(apiHandler_1.asyncToResp(async function (req, res, next) {
+    .put(function (req, res, next) {
     let devise = req.body; //as javascript object
-    let updatedDevise = await deviseService.update(devise);
-    return updatedDevise;
-}));
+    deviseService.update(devise)
+        .then((updatedDevise) => { res.send(updatedDevise); })
+        .catch((err) => { res.status(500).send({ err: err }); });
+});
 // DELETE http://localhost:8282/devise-api/private/role_admin/devise/EUR
 exports.deviseApiRouter.route('/devise-api/private/role-admin/devise/:code')
-    .delete(apiHandler_1.asyncToResp(async function (req, res, next) {
+    .delete(function (req, res, next) {
     let codeDevise = req.params.code;
-    await deviseService.deleteById(codeDevise);
-    return { "action": "devise with code=" + codeDevise + " was deleted" };
-}));
+    deviseService.deleteById(codeDevise)
+        .then(() => {
+        res.send({ "action": "devise with code=" + codeDevise + " was deleted" });
+    })
+        .catch((err) => { res.status(500).send({ err: err }); });
+});

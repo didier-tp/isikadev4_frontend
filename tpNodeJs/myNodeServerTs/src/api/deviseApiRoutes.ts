@@ -34,7 +34,7 @@ deviseApiRouter.route('/devise-api/public/devise')
     let  changeMini :number = Number(req.query.changeMini);
     deviseService.findAll()
     .then((deviseArray)=>{ res.send(deviseArray);} )
-    .catch((err)=>{ res.status(404).send({ err );})
+    .catch((err)=>{ res.status(404).send( err );})
 });
 
 // .../devise-api/public/convert?source=EUR&target=USD&amount=100 renvoyant { ... } 

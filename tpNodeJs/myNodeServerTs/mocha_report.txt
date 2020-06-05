@@ -1,6 +1,6 @@
 
 > mynodeserver@1.0.0 test D:\tp\local-git-didier-tp-repositories\isikadev4_frontend\tpNodeJs\myNodeServerTs
-> mocha --reporter spec
+> mocha dist/test --reporter spec
 
 http://localhost:8282
 rest express node server listening at 8282
@@ -21,7 +21,7 @@ deviseRelue (after saveOrUpdate):{"nom":"devise a1","change":123,"code":"Da1"}
       âˆš saveOrUpdate_et_getByIdEnchaine
 
 
-  2 passing (145ms)
+  2 passing (169ms)
   2 failing
 
   1) devise api
@@ -56,4 +56,4 @@ deviseRelue (after saveOrUpdate):{"nom":"devise a1","change":123,"code":"Da1"}
 
 
 
-Terminer le programme de commandes (O/N)ÿ? Terminer le programme de commandes (O/N)ÿ? Terminer le programme de commandes (O/N)ÿ? Terminer le programme de commandes (O/N)ÿ? 
+Terminer le programme de commandes (O/N)ÿ? Terminer le programme de commandes (O/N)ÿ? 

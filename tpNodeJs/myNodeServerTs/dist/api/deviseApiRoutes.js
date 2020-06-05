@@ -18,7 +18,7 @@ exports.deviseApiRouter.route('/devise-api/public/devise/:code')
     let codeDevise = req.params.code;
     deviseService.findById(codeDevise)
         .then((devise) => { res.send(devise); })
-        .catch((err) => { res.status(404).send({ err: err }); });
+        .catch((err) => { res.status(404).send(err); });
 });
 // http://localhost:8282/devise-api/public/devise renvoyant tout [ {} , {}]
 // http://localhost:8282/devise-api/public/devise?changeMini=1.1 renvoyant [{}] selon critere
@@ -27,7 +27,7 @@ exports.deviseApiRouter.route('/devise-api/public/devise')
     let changeMini = Number(req.query.changeMini);
     deviseService.findAll()
         .then((deviseArray) => { res.send(deviseArray); })
-        .catch((err) => { res.status(404).send({ err: err }); });
+        .catch((err) => { res.status(404).send({ err }); });
 });
 // .../devise-api/public/convert?source=EUR&target=USD&amount=100 renvoyant { ... } 
 exports.deviseApiRouter.route('/devise-api/public/convert')
@@ -48,7 +48,7 @@ exports.deviseApiRouter.route('/devise-api/public/convert')
             result: amount * deviseTarget.change / deviseSrc.change
         });
     })
-        .catch((err) => { res.status(500).send({ err: err }); });
+        .catch((err) => { res.status(500).send(err); });
 });
 //POST ... with body { "code": "M1" , "nom" : "monnaie1" , "change" : 1.123 }
 exports.deviseApiRouter.route('/devise-api/private/role-admin/devise')
@@ -56,7 +56,7 @@ exports.deviseApiRouter.route('/devise-api/private/role-admin/devise')
     let devise = req.body; //as javascript object via jsonParser
     deviseService.insert(devise)
         .then((savedDevise) => { res.send(savedDevise); })
-        .catch((err) => { res.status(500).send({ err: err }); });
+        .catch((err) => { res.status(500).send(err); });
 });
 //PUT ... with body { "code": "USD" , "nom" : "dollar" , "change" : 1.1 }
 exports.deviseApiRouter.route('/devise-api/private/role-admin/devise')
@@ -64,7 +64,7 @@ exports.deviseApiRouter.route('/devise-api/private/role-admin/devise')
     let devise = req.body; //as javascript object
     deviseService.update(devise)
         .then((updatedDevise) => { res.send(updatedDevise); })
-        .catch((err) => { res.status(500).send({ err: err }); });
+        .catch((err) => { res.status(500).send(err); });
 });
 // DELETE http://localhost:8282/devise-api/private/role_admin/devise/EUR
 exports.deviseApiRouter.route('/devise-api/private/role-admin/devise/:code')
@@ -74,5 +74,5 @@ exports.deviseApiRouter.route('/devise-api/private/role-admin/devise/:code')
         .then(() => {
         res.send({ "action": "devise with code=" + codeDevise + " was deleted" });
     })
-        .catch((err) => { res.status(500).send({ err: err }); });
+        .catch((err) => { res.status(500).send(err); });
 });

@@ -23,7 +23,7 @@ deviseApiRouter.route('/devise-api/public/devise/:code')
     let codeDevise = req.params.code;
     deviseService.findById(codeDevise)
     .then((devise)=>{ res.send(devise);} )
-    .catch((err)=>{ res.status(404).send({ err: err });})
+    .catch((err)=>{ res.status(404).send(err);})
    
 });
 
@@ -34,7 +34,7 @@ deviseApiRouter.route('/devise-api/public/devise')
     let  changeMini :number = Number(req.query.changeMini);
     deviseService.findAll()
     .then((deviseArray)=>{ res.send(deviseArray);} )
-    .catch((err)=>{ res.status(404).send({ err: err });})
+    .catch((err)=>{ res.status(404).send({ err );})
 });
 
 // .../devise-api/public/convert?source=EUR&target=USD&amount=100 renvoyant { ... } 
@@ -54,7 +54,7 @@ deviseApiRouter.route('/devise-api/public/convert')
                                         result : amount * deviseTarget.change / deviseSrc.change
                                         });
      })
-     .catch((err)=>{ res.status(500).send({ err: err });})
+     .catch((err)=>{ res.status(500).send(err );})
 });
 
 
@@ -64,7 +64,7 @@ deviseApiRouter.route('/devise-api/private/role-admin/devise')
     let  devise :Devise =  req.body ; //as javascript object via jsonParser
     deviseService.insert(devise)
     .then((savedDevise)=>{ res.send(savedDevise);} )
-    .catch((err)=>{ res.status(500).send({ err: err });})
+    .catch((err)=>{ res.status(500).send(  err );})
 });
 
 //PUT ... with body { "code": "USD" , "nom" : "dollar" , "change" : 1.1 }
@@ -73,7 +73,7 @@ deviseApiRouter.route('/devise-api/private/role-admin/devise')
     let  devise :Devise =  req.body ; //as javascript object
     deviseService.update(devise)
     .then((updatedDevise)=>{ res.send(updatedDevise);} )
-    .catch((err)=>{ res.status(500).send({ err: err });})
+    .catch((err)=>{ res.status(500).send( err );})
 });
 
 // DELETE http://localhost:8282/devise-api/private/role_admin/devise/EUR
@@ -84,7 +84,7 @@ deviseApiRouter.route('/devise-api/private/role-admin/devise/:code')
 	.then ( () => {
                   res.send({ "action" : "devise with code="+codeDevise + " was deleted"});
                  })
-    .catch((err)=>{ res.status(500).send({ err: err });})
+    .catch((err)=>{ res.status(500).send(err);})
 });
 
 

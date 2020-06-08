@@ -2,8 +2,10 @@
 <label>ht:</label> 
 <input type="text" [(ngModel)]="calcul.ht"
        (input)="onCalculerTvaEtTtc()" /> <br/>
+       
+<label>taux:</label>
 <!--
-<label>taux:</label> <input type="text" [(ngModel)]="calcul.taux" /> <br/>
+ <input type="text" [(ngModel)]="calcul.taux" /> <br/>
 -->
 <select [(ngModel)]="calcul.taux"
         (change)="onCalculerTvaEtTtc()">

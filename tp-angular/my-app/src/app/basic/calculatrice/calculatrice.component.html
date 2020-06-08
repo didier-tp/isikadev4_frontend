@@ -1,1 +1,6 @@
 <p>calculatrice works!</p>
+<label>a:</label> <input type="text" [(ngModel)]="calcul.a" /> <br/>
+<label>b:</label> <input type="text" [(ngModel)]="calcul.b" /> <br/>
+<input type="button" value="+" (click)="onAddition($event)" /> <br/>
+<input type="button" value="*" (click)="onMultiplication()" /> <br/>
+res= <span [class.positif]="calcul.res>=0" [class.negatif]="calcul.res<0" >{{calcul.res}}</span>

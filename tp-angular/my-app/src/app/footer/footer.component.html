@@ -2,5 +2,8 @@
         <select [(ngModel)]="humeur" (change)="onChangeHumeur()">
                 <option *ngFor="let h of listeHumeurs">{{h}}</option>
         </select> &nbsp;
+        couleurFond:<select [(ngModel)]="preferencesService.couleurFondPreferee" >
+                        <option *ngFor="let c of listeCouleurs">{{c}}</option>
+        </select> &nbsp;
 
 </footer>

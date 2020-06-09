@@ -1,4 +1,5 @@
-<div id="myheader">header - {{titre}}
+<div id="myheader" [style.background-color]="preferencesService.couleurFondPreferee" >
+    header - {{titre}}
     <a routerLink='/welcome'>welcome</a> &nbsp;
     <a [routerLink]="['/login']">login</a> &nbsp;
     <a routerLink='/basic'>basic</a> &nbsp;

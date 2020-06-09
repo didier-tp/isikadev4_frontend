@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { PreferencesService } from '../common/service/preferences.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +10,8 @@ export class FooterComponent implements OnInit {
 
   humeur : string = "bonneHumeur"; //par défaut
   listeHumeurs : string[] = [ "bonneHumeur", "mauvaiseHumeur"] ;
+  
+  listeCouleurs : string[] = [ "yellow", "white" , "green" , "red" , "blue"] ; 
 
   @Output()
   public changementHumeur : EventEmitter<{value:string}> = new EventEmitter<{value:string}>(); 
@@ -18,7 +21,7 @@ export class FooterComponent implements OnInit {
     this.changementHumeur.emit({value:this.humeur});
   }
 
-  constructor() { }
+  constructor(public preferencesService : PreferencesService) { }
 
   ngOnInit(): void {
   }

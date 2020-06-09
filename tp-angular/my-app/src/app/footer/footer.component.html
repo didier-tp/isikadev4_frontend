@@ -1,1 +1,6 @@
-<footer>footer works !!</footer>
+<footer>footer works - 
+        <select [(ngModel)]="humeur" (change)="onChangeHumeur()">
+                <option *ngFor="let h of listeHumeurs">{{h}}</option>
+        </select> &nbsp;
+
+</footer>

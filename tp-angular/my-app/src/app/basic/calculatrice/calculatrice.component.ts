@@ -22,6 +22,7 @@ calcul = { a : 0 ,
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

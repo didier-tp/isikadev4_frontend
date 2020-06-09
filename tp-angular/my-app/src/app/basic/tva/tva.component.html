@@ -16,5 +16,5 @@
 -->
 <div *ngIf="calcul.tva != 0">
   tva= <span [class.positif]="calcul.tva>=0" [class.negatif]="calcul.tva<0" >{{calcul.tva}}</span> <br/>
-  ttc= <span [class.positif]="calcul.ttc>=0" [class.negatif]="calcul.ttc<0" >{{calcul.ttc}}</span> <br/>
+  ttc= <span [class.positif]="calcul.ttc>=0" [class.negatif]="calcul.ttc<0" >{{calcul.ttc | number:'1.0-2'}}</span> <br/>
 </div>

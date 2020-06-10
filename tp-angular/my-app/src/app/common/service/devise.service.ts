@@ -8,13 +8,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DeviseService {
-
+/*
   private tabDevises = [
     new Devise('EUR','Euro',1),
     new Devise('USD','Dollar',1.1),
     new Devise('GBP','Livre',0.9),
     new Devise('JPY','YEN',122)
   ];
+  */
 
   public convertir(montant:number ,
      codeMonnaieSource : string ,

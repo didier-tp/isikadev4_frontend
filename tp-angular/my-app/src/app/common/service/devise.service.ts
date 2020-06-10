@@ -3,6 +3,7 @@ import { Devise } from '../data/devise';
 import { Observable, of } from 'rxjs';
 import { map , flatMap ,toArray ,filter} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { ResConv } from '../data/ResConv';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,12 @@ export class DeviseService {
     let url =`./devise-api/public/convert/`
       +`?source=${codeMonnaieSource}&target=${codeMonnaieCible}&amount=${montant}`; 
       //url relative avec ng serve --proxy-config proxy.conf.json en mode DEV pour dediriger vers nodeJs
-    return this.http.get<object>(url)
+    return this.http.get<ResConv>(url)
             .pipe(
-               map((objResConv:any)=>{return objResConv.result; })
+               map((objResConv:ResConv)=>{return objResConv.result; })
             );
+    //pour typescript , types plus ou moins précis :
+    // any , object , interface ResConv , éventuelle class ResConversion
     }
 
   public recupererDevises() :Observable<Devise[]>{

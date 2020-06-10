@@ -15,27 +15,30 @@ export class ConversionComponent implements OnInit {
   resConversion : number;
 
   constructor(public deviseService : DeviseService) { 
-    this.listeDevises = deviseService.recupererDevises();
-    this.codeMonnaieSource=this.listeDevises[0].code;
-    this.codeMonnaieCible=this.listeDevises[1].code;
-
-    //ré-ecrire en version asynchrone:
-    /*
-deviseService.recupererDevises().
-subscribe(
-  (tabDevises)=>{this.listeDevise=tabDevise; ....} ,
-  (error) => { console.log(error); }
-);
-
-
+   
+    deviseService.recupererDevises()
+      .subscribe(
+        (tabDevises)=>{this.listeDevises=tabDevises; 
+                       this.codeMonnaieSource=this.listeDevises[0].code;
+                        this.codeMonnaieCible=this.listeDevises[1].code;} ,
+        (error) => { console.log(error); }
+      );
+     /*
+     ObservableRetournéImmediatement.subscribe(
+       callbackDéclenchéeEnDifféréEnCasDeSuccès,
+       callbackDéclenchéeEnDifféréEnCasDeErreur
+       );
     */
   }
 
   onConvertir(){
-    this.resConversion = this.deviseService.convertir(this.montant,
-                                                      this.codeMonnaieSource,
-                                                      this.codeMonnaieCible);
-    //à ré-ecrire via .subscribe(... , ...);
+    this.deviseService.convertir(this.montant,
+                                this.codeMonnaieSource,
+                                this.codeMonnaieCible)
+                      .subscribe(
+                          (montantConverti)=>{this.resConversion=montantConverti; } ,
+                          (error) => { console.log(error); }
+                      );
   }
 
   ngOnInit(): void {

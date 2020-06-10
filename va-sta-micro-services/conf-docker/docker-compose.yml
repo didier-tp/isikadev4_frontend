@@ -1,0 +1,41 @@
+version: '3'
+
+networks:
+   mynetwork:
+      driver: bridge
+ 
+services:
+
+#mysql-db:
+#    image: xyz/devise-db
+#    ports:
+#      - 3306:3306
+#    networks:
+#      mynetwork:
+#        aliases:
+#         - devise.db.host
+#         - devise.db.service
+
+ backend-api:
+   build : ./backend-api
+#   image: xyz/devise-api
+   container_name: backend-api
+   environment:
+     PORT : 8282
+   networks:
+     mynetwork:
+      aliases:
+          - backend.api.host
+          - backend.api.service
+   ports:
+     - "8282:8282"
+ 
+ frontend:
+#  image: xyz/frontend
+   build : ./frontend
+   container_name : frontend
+   ports:
+     - "80:80"
+   networks:
+     - mynetwork
+ 

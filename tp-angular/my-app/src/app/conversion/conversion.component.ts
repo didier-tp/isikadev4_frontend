@@ -18,17 +18,22 @@ export class ConversionComponent implements OnInit {
    
     deviseService.recupererDevises()
       .subscribe(
-        (tabDevises)=>{this.listeDevises=tabDevises; 
-                       this.codeMonnaieSource=this.listeDevises[0].code;
-                        this.codeMonnaieCible=this.listeDevises[1].code;} ,
+        (tabDevises)=>{ this.gererTabDevises(tabDevises) } ,
         (error) => { console.log(error); }
       );
+      
      /*
      ObservableRetournéImmediatement.subscribe(
        callbackDéclenchéeEnDifféréEnCasDeSuccès,
        callbackDéclenchéeEnDifféréEnCasDeErreur
        );
     */
+  }
+
+  gererTabDevises(tabDevises:Devise[]){
+     this.listeDevises=tabDevises; 
+     this.codeMonnaieSource=this.listeDevises[0].code;
+     this.codeMonnaieCible=this.listeDevises[1].code;
   }
 
   onConvertir(){

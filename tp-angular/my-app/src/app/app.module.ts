@@ -11,6 +11,8 @@ import { TvaComponent } from './basic/tva/tva.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsUtilModule } from 'src/bs-util/bs-util.module';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -33,7 +35,8 @@ import { ConversionComponent } from './conversion/conversion.component';
     AppRoutingModule ,
     FormsModule,
     TabsModule.forRoot(),
-    BsUtilModule
+    BsUtilModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

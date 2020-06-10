@@ -12,12 +12,13 @@ export class DeviseService {
     new Devise('GBP','Livre',0.9),
   ];
 
+  //nouveau type de retour :Observable<number>
   public convertir(montant:number ,
      codeMonnaieSource : string ,
      codeMonnaieCible : string ) : number {
       return 1.12345; //simulation
     }
-
+//nouveau type de retour :Observable<Devise[]>
   public recupererDevises() : Devise[]{
     return this.tabDevises; //simulation
   }

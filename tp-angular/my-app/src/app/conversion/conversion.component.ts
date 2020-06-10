@@ -18,12 +18,24 @@ export class ConversionComponent implements OnInit {
     this.listeDevises = deviseService.recupererDevises();
     this.codeMonnaieSource=this.listeDevises[0].code;
     this.codeMonnaieCible=this.listeDevises[1].code;
+
+    //ré-ecrire en version asynchrone:
+    /*
+deviseService.recupererDevises().
+subscribe(
+  (tabDevises)=>{this.listeDevise=tabDevise; ....} ,
+  (error) => { console.log(error); }
+);
+
+
+    */
   }
 
   onConvertir(){
     this.resConversion = this.deviseService.convertir(this.montant,
                                                       this.codeMonnaieSource,
                                                       this.codeMonnaieCible);
+    //à ré-ecrire via .subscribe(... , ...);
   }
 
   ngOnInit(): void {

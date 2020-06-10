@@ -24,5 +24,6 @@ export class DeviseService {
     return of(this.tabDevises); //simulation
   }
 
+  //injecter http de type HttpClient (et aussi HttpClientModule dans app.module.ts)
   constructor() { }
 }

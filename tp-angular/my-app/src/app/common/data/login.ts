@@ -1,7 +1,6 @@
 export class Login {
-    constructor(public username : string = "",
-                public password : string = "",
-                public roles : string = "user"){
-    }
-    //roles= "user" ou "admin" ou "user,admin" ou ...
+	constructor(
+		public username : string = "admin1",
+		public password: string = "pwdadmin1",
+		public roles: string ="admin"){}
 }

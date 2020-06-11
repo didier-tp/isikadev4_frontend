@@ -44,4 +44,12 @@ export class DeviseService {
 
   //injecter http de type HttpClient (et aussi HttpClientModule dans app.module.ts)
   constructor(private http: HttpClient) { }
+
+
+  public deleteDeviseServerSide(deviseCode):Observable<any>{
+    let deleteUrl : string = "./devise-api/private/role_admin/devise/" + deviseCode ;
+    console.log("deleteUrl= " + deleteUrl );
+    return this.http.delete(deleteUrl );
+    }
+
 }

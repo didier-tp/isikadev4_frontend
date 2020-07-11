@@ -16,30 +16,30 @@
 function switchContent(partName){
  switch(partName){
 	case "euroToFranc" :
-	    loadJsScript("js/euroToFranc.js");
-		loadSubPart("idAlternativeSubPart","sp_euroToFranc.html","startEuroToFranc()")
-	break;
+	    loadJsScript("js/euroToFranc.js", function(){
+		   loadSubPart("idAlternativeSubPart","sp_euroToFranc.html","startEuroToFranc()")
+		});	break;
 	case "graph" :
 	    loadJsScript("lib/chart.2.7.3.min.js");
-		loadJsScript("js/graph.js");
-		loadSubPart("idAlternativeSubPart","sp_graph.html","startGraph()")
-	break;
+		loadJsScript("js/graph.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_graph.html","startGraph()")
+		});	break;
 	case "calculatrice" :
-		loadJsScript("js/calculatrice.js");
-		loadSubPart("idAlternativeSubPart","sp_calculatrice.html","startCalculatrice()")
-	break;
+		loadJsScript("js/calculatrice.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_calculatrice.html","startCalculatrice()")
+		});	break;
 	case "dom_crud_devise" :
-		loadJsScript("js/dom_crud_devise.js");
-		loadSubPart("idAlternativeSubPart","sp_dom_crud_devise.html","startDomCrudDevise()")
-	break;
+		loadJsScript("js/dom_crud_devise.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_dom_crud_devise.html","startDomCrudDevise()")
+		});	break;
 	case "dessin" :
-		loadJsScript("js/dessin.js");
-		loadSubPart("idAlternativeSubPart","sp_dessin.html","startDessin()")
-	break;
+		loadJsScript("js/dessin.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_dessin.html","startDessin()")
+		});	break;
 	case "news" :
-		loadJsScript("js/news.js");
-		loadSubPart("idAlternativeSubPart","sp_news.html","startNews()")
-	break;
+		loadJsScript("js/news.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_news.html","startNews()")
+		});	break;
 	}
 }
 

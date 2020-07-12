@@ -50,39 +50,318 @@ Contenu :
    du référentiel https://github.com/didier-mycontrib/web-html5-css3
    Et on pourra par exemple choisir 36em , 46em et 64em comme effet de seuil (sur min-width)
 
-5. Améliorer encore sp_dom_crud_devise.html (suite du Tp3)
+5a. Améliorer encore sp_dom_crud_devise.html (suite du Tp3)
    en utilisant bootstrap_css (grille , form_horizontal , form_group , ...).
    On pourra par exemple s'inspirer le la partie bs4/form-layout.html 
    du référentiel git "https://github.com/didier-mycontrib/test_bootstrap".
 
-6. Via l'api javascript canvas de HTML5, compléter le code de js/dessin.js
+5b. (facultatif) Améliorer sp_euroToFranc.html via un encadrement
+     <!-- <h3>euroToFranc</h3> -->
+   <fieldset class="c-fieldset">
+      <legend class="c-legend">euroToFranc</legend>
+      ...
+   </fiedset>
+  -------
+  ouvrir directement le fichier sp_euroToFranc.html via un navigateur
+  via http://localhost:3000/index.html et lite-server le résultat est différent
+  car bootstrap...css a deja modifié le look par défaut des tags fieldset et legend .
+  ----
+  il nous faut donc ajouter dans styles.css des classes de style de ce genre:
+  .c-fieldset {
+  	padding:0.5em;
+  	margin:0.5em;
+  	border-width: 2px; 
+  	border-style: solid;
+  	border-color: black;
+  }
+ .c-legend {
+  	width:inherit; /* Or auto */
+  	padding:0 10px; /* To give a bit of padding on the left and right */
+  	border-bottom:none;
+  }
+
+5c. placer la classe suivante dans un nouveau fichier common.css:
+    .enEvidence {
+	color : rgb(34, 34, 180) ;
+	font-style : italic;
+    }
+------------------
+Ajouter dans css/styles.css 
+@import "common.css";
+
+.enEvidence {
+  font-weight : bold;
+  color : red;
+}
+------ 
+ajouter quelque part class="enEvidence" 
+(ex: <span class="enEvidence" id="idSpanMontantFranc"> de sp_euroToFranc.html )
+puis visualiser l'effet de l'application de cette classe
+----
+Tester le comportement des ajustements suivants:
+* ajouter (ou retirer) !important  sur la ligne color : rgb(34, 34, 180) ; de common.css
+*  !default n'existe qu'en version .scss
+ 
+
+6a. Via l'api javascript canvas de HTML5, compléter le code de js/dessin.js
    de façon à ce l'on puisse dessiner et effacer un dessin dans sp_dessin.html .
 
-7. Compléter la partie "news" (sp_news.html , js/news.js) en ajoutant :
+6b. (falculatif) améliorer encore sp_dessin.html et js/dessin.js
+   en ajoutant des boutons radios pour choisir typeFig (ligne , rect , cercle)
+               une liste déroulante pour choisir une couleur.
+               un code javascript remanié qui dessine des figures en gérant
+               les événements "mousedown" et mouseup" plutôt que "click"
+
+7a. Compléter la partie "news" (sp_news.html , js/news.js) en ajoutant :
    - des appels ajax (en mode GET) pour récupérer le contenu de data/news.json
    - des beaux affichages de chacune des news sous forme de "card boostrap4"
      NB: on affichera 2 news (dans 2 cards) par ligne
          (avec un layout contrôlé au choix par flexBox ou via grille bootstrap)
-         et on controlera la taille des images internes
+         et on controlera SI BESOIN la taille des images internes
          via une classe de style de ce genre:
          img.maxOverviewSized {
-	      max-height : 250px;
-	     /*width : 100%;*/
-	     max-width : 100%;
-	    height: auto;
-	   width : auto;
+	      max-height : 250px;    /*width : 100%;*/
+	     max-width : 100%;    height: auto;	   width : auto;
          }
+----------------------
+indications : 
+    <div id="zoneNews" class="container-fluid"> dans sp_news.html
+    et dans js/news.js , s'appuyer sur les 3 fonctions suivantes à compléter:
 
-8. Améliorer index.html sur les aspects suivants:
+    
+function creerEtAttacherCard(news,parentInDom){
+        // news = objet javascript  de type news avec parties 
+	//	"title" ,   "text" ,  "image" et "lien" (selon data/news.json)
+	// et parentInDom pour déclencher parentInDom.appendChild(noeudCard);
+	
+
+        //1. générer <div class="card" via api DOM (createElement(...) , setAttribute(...))
+	var noeudCard = ...
+	
+	
+	//2 générer et attacher <div class="card-header bg-primary text-white">titre1</div>
+	var noeudCardHeader = ....
+        //....
+	noeudCard.appendChild(noeudCardHeader);
+	
+	//3. générer et attacher <img class="card-img-top" src="images/imagexyz.png" >
+	//....
+	
+	//4. générer et attacher <div class="card-body">
+        //avec dans .innerHTML le texte de la news concaténé à 
+        //"<br/><a href='"+news.lien+"' target='_new'> details </a>"
+}
+
+function afficherNews(tabNews){
+	var zoneNews=document.getElementById("zoneNews");
+	var nbNews = tabNews.length;
+	var nbRows = nbNews/2; //si 2 colonnes par ligne
+	console.log("nbNews="+ nbNews + " nbRows=" + nbRows);
+	for(numRow=1;numRow<=nbRows;numRow++){
+		//<div class="row">
+		var noeudRow = document.createElement("div");
+		noeudRow.setAttribute("class" , "row");
+		zoneNews.appendChild(noeudRow);
+		for(numCol=1;numCol<=2;numCol++){
+			//<div class="col-sm-6">
+			var noeudCol = document.createElement("div");
+		    	noeudCol.setAttribute("class" , "col-sm-6");
+		    	noeudRow.appendChild(noeudCol);
+			var indexNews = (numRow-1)*2 + (numCol-1);
+			if (indexNews < nbNews){
+				//console.log(indexNews);
+				creerEtAttacherCard(tabNews[indexNews],noeudCol);
+			}
+		}
+	}
+}
+
+function startNews(){ 
+	console.log("starNews");
+        //déclencher requête ajax en mode GET avec url = "data/news.json
+        //dans callback anonyme, utiliser JSON.parse() pour transformer données json
+        //en un tableau d'objets javascript (ex:   var tabNews = [];)
+        //puis appeler afficherNews(tabNews);
+}
+-----------------------------------
+    
+
+7b. Visualiser (dans les sp_....html contenant des <label>)
+    l'effet du style suivant dans styles.css 
+    (sachant que \00a0 est l'encodage unicode du caractère espace) :
+    label:after { content: ":\00a0" } 
+
+7c. Ajouter un effet de zoom sur une nouvelle classe .small-zoom dans styles.css
+    Et l'on pourra appliquer cette classe sur les "card" construites dynamiquement
+    au sein de js/news.js .
+    -----------
+.small-zoom {
+  transform: scale(0.98);
+  transition: 0.6s;
+  
+}
+
+.small-zoom:hover {
+  transform: scale(1.00);
+  border-width : 4px; 
+  border-style : solid; 
+  border-color : red; 
+} 
+----------------------------
+Ajustez l'effet à votre goût ...
+
+8a. Améliorer styles.css en partant de styles.scss et en utilisant quelques variables.
+   Attention , ne pas écraser/perdre styles.css mais dupliquer css/styles.css
+               en scss/styles.scss avant de l'enrichir/modifier
+   Rappel :
+   REM lancer prealablement: npm install -g sass
+   sass scss/styles.scss css/styles.css
+
+
+8b. Version "customisée" de bootstrap-css :
+   Récupérer par téléchargement bootstrap-4.4.0.zip via l'url suivante:
+      https://github.com/twbs/bootstrap/archive/v4.4.0.zip
+   Extraire le contenu dans un répertoire temporaire
+   Recopier le répertoire c:/temp_ou_autre/.../bootstrap-4.4.0/scss
+   à l'intérieur du répertoire tpJsWebResponsiveSpa\scss
+   puis renommer tpJsWebResponsiveSpa\scss\scss en tpJsWebResponsiveSpa\scss\bootstrap-scss
+   créer un nouveau ficher  tpJsWebResponsiveSpa\scss\my-custom-bootstrap.scss 
+   contenant ces quelques lignes:
+   --------------------------
+   //before/first : our customization (variables override)
+$theme-colors: (
+  "primary": #11640f,
+  "secondary":  #66b863,
+  "success":    #426e40,
+  "info":       #2a1158,
+  "warning":    #f17f14,
+  "danger":    #6d2c29 ,
+  "light":     #f8f7a6,
+  "dark":      #292b29
+  );
+//after : default bootstrap scss
+@import "bootstrap-scss/bootstrap";
+   ----------------------------------------
+   Générer css/my-custom-bootstrap.css en lancant (dans une fenetre cmd):
+   sass scss/my-custom-bootstrap.scss css/my-custom-bootstrap.css
+   Modifier index.html de façon à utiliser la version customisée de bootstrap:
+    <!-- <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="./css/my-custom-bootstrap.css">
+   Visualiser le résultat avec au moins un  <input type="button" class="btn-primary" .../>
+   Ajustez les couleurs de my-custom-bootstrap.scss à votre goût ...
+
+9a. Améliorer index.html sur l' aspect suivant:
     - sticky_header (et éventuellement sticky_footer) 
       (source d'inspiration:  tests-html5/with_sticky_header.html
                       ou bien tests-html5/with_flex_sticky_header.html
        du référentiel git https://github.com/didier-mycontrib/web-html5-css3)
-    - éventuel menu déroulant (navbar de bootstrap 4)
-    - ...
 
-9. Améliorer styles.css en partant de styles.scss et en utilisant quelques variables
-   	 
+9b . (facultatif) Améliorer index.html sur l' aspect suivant
+    - menu déroulant (navbar de bootstrap 4)
+    Dupliquer le fichier index.html en index_sans_menu_deroulant.html
+    pour conserver une copie de sauvegarde de l'ancienne version.
+
+    Ajouter (si ce n'est pas déjà fait) dans le haut de index.html:
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script src="lib/bootstrap.bundle.min.js"></script>
+    et placer dans lib  des copies de jquery-3.3.1.min.js et bootstrap.bundle.min.js
+    que l'on peut trouver entre autres dans la partie "bs4" du
+    référentiel git "https://github.com/didier-mycontrib/test_bootstrap".
+
+    Dans la partie <script> .... </script> de index.html
+    supprimer la fonction initMainPageAfterLoad() ainsi que l'instruction
+    window.addEventListener('load', initMainPageAfterLoad);
+    et placer à la place la fonction suivante:
+    
+function switchContent(partName){
+ switch(partName){
+	case "euroToFranc" :
+	    loadJsScript("js/euroToFranc.js", function(){
+		   loadSubPart("idAlternativeSubPart","sp_euroToFranc.html","startEuroToFranc()")
+		});	break;
+	case "graph" :
+	    loadJsScript("lib/chart.2.7.3.min.js");
+		loadJsScript("js/graph.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_graph.html","startGraph()")
+		});	break;
+	case "calculatrice" :
+		loadJsScript("js/calculatrice.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_calculatrice.html","startCalculatrice()")
+		});	break;
+	case "dom_crud_devise" :
+		loadJsScript("js/dom_crud_devise.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_dom_crud_devise.html","startDomCrudDevise()")
+		});	break;
+	case "dessin" :
+		loadJsScript("js/dessin.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_dessin.html","startDessin()")
+		});	break;
+	case "news" :
+		loadJsScript("js/news.js", function(){
+			loadSubPart("idAlternativeSubPart","sp_news.html","startNews()")
+		});	break;
+	}
+}
+
+Dans la partie <body>...<header> de index.html
+remplacer la partie <nav>  
+	<input type="button" ....
+	<input type="button" value="news" id="idP6" /> - 
+  </nav>
+par la partie suivante:
+-------------------------------------------------
+<nav class="navbar navbar-expand-sm navbar-light bg-faded">
+ <button class="navbar-toggler" type="button" 
+data-toggle="collapse" data-target="#nav-content" 
+aria-controls="nav-content" aria-expanded="false" 
+aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<!-- Brand -->
+<a class="navbar-brand" href="#">My Responsive App</a>
+
+<!-- Links -->
+<div class="collapse navbar-collapse" id="nav-content">   
+ <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#" onclick="switchContent('euroToFranc')">EuroToFranc</a>
+    </li>
+	<li class="nav-item">
+	  <a class="nav-link" href="#" onclick="switchContent('graph')">Graph </a>
+	</li>
+	<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Autres
+</a>
+	<div class="dropdown-menu" aria-labelledby="Preview">
+	<a class="dropdown-item" href="#" onclick="switchContent('calculatrice')">calculatrice</a>
+	<a class="dropdown-item" href="#" onclick="switchContent('dessin')">dessin</a>
+	<!-- <li role="separator" class="divider"></li> -->
+	<a class="dropdown-item" href="#"onclick="switchContent('dom_crud_devise')">domCrudDevises</a>
+	<a class="dropdown-item" href="#"onclick="switchContent('news')">news</a>
+	</div>
+	</li>
+</ul>   
+</div>
+</nav>
+-------------------------------------------------
+Visualiser le comportement "responsive" du menu en retrecissant la taille de la fenetre
+du navigateur 
+
+10 (faculatif) Ajout d'onglets dans sp_calculatrice.html
+   indications:
+   Ajouter (si ce n'est pas déjà fait) dans le haut de index.html:
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script src="lib/bootstrap.bundle.min.js"></script>
+    et placer dans lib  des copies de jquery-3.3.1.min.js et bootstrap.bundle.min.js
+    que l'on peut trouver entre autres dans la partie "bs4" du
+    référentiel git "https://github.com/didier-mycontrib/test_bootstrap".
+   
+    S'inspirer de l'exemple bs_dynamic_toggle_tab.html de test_bootstrap/bs4 
+    mais peut être sans utiliser la class "container" au niveau des "tab-pane" .
+    Bien régler active et href="#id_tabXy" au niveau des "nav-link"
+      	 
    
 
    
